@@ -1,7 +1,6 @@
 package core;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
@@ -47,11 +46,8 @@ public abstract class BaseTest {
                 options.setPlatformName(Constants.ANDROID_PLATFORM_NAME);
                 options.setAutomationName(properties.getProperty(Constants.ANDROID_AUTOMATION_DRIVER));
                 options.setAppWaitForLaunch(true);
+                options.setCapability("appPackage", "com.spireon.atidriver.stage");
                 options.setAppWaitPackage("com.spireon.atidriver.stage");
-                options.setCapability("appPackage", "com.spireon.atidriver"); // This is package name of your app (you can get it from apk info app)
-                options.setCapability("appActivity","com.spireon.atidriver.cognito.forgotpassword.ForgotPasswordActivity");
-//                options.setCapability("ignoreHiddenApiPolicyError", true);
-//                options.setCapability("appWaitForLaunch", false);
                 if (System.getenv("BITRISE_APK_PATH") == null && System.getenv("BITRISE_SOURCE_DIR") == null) {
                     options.setApp(properties.getProperty(Constants.ANDROID_APP_PATH));
                 } else if (System.getenv("BITRISE_APK_PATH") != null) {
@@ -60,9 +56,8 @@ public abstract class BaseTest {
                     options.setApp(System.getenv("BITRISE_SOURCE_DIR") + "/src/test/java/binaries/app-android_atidriverStage-debug.apk");
                 }
                 options.setCapability(Constants.ANDROID_SERVER_INSTALL_TIMEOUT, 30000);
-                //options.autoGrantPermissions();
+//                options.autoGrantPermissions();
                 driver = new AndroidDriver(url, options);
-
             }
             case iOS -> {
                 currentPlatform = Constants.Platform.iOS;
@@ -91,6 +86,25 @@ public abstract class BaseTest {
 
     public AppiumDriver getDriver() {
         return driver;
+    }
+
+    public boolean isAndroidPlatform() {
+        return currentPlatform == Constants.Platform.ANDROID;
+    }
+
+    public boolean isIosPlatform() {
+        return currentPlatform == Constants.Platform.iOS;
+    }
+
+    public void disMissLocationPermission(BasePage basePage) {
+        if(isAndroidPlatform()) {
+            TestUtility.waitForVisibility(basePage.locationPermission, driver);
+            if (TestUtility.isElementPresent(basePage.locationPermission)) {
+                basePage.locationPermission.click();
+            }
+        } else {
+            // todo handle by iOS
+        }
     }
 
     @AfterClass(alwaysRun = true)
