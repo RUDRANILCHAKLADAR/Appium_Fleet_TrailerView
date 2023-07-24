@@ -53,7 +53,7 @@ public abstract class BaseTest {
                 } else if (System.getenv("BITRISE_APK_PATH") != null) {
                     options.setApp(System.getenv("BITRISE_APK_PATH"));
                 } else {
-                    options.setApp(System.getenv("BITRISE_SOURCE_DIR") + "/src/test/java/binaries/app-android_atidriverStage-debug.apk");
+                    options.setApp(System.getenv("BITRISE_SOURCE_DIR") + properties.getProperty(Constants.ANDROID_APP_PATH));
                 }
                 options.setCapability(Constants.ANDROID_SERVER_INSTALL_TIMEOUT, 30000);
 //                options.autoGrantPermissions();
