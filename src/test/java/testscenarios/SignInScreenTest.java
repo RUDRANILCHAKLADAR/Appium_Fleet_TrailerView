@@ -19,6 +19,7 @@ public class SignInScreenTest extends BaseTest {
     @Test(priority = 1)
     public void testInvalidDialog(){
 //        TestUtility.waitForVisibility(signInPage.signInTitle, getDriver());
+        signInPage.signInTitle.isDisplayed();
         signInPage.userNameEditText.isDisplayed();
         TestUtility.waitForVisibility(signInPage.userNameEditText, getDriver());
         signInPage.userNameEditText.sendKeys("tv_rs_27");

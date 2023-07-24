@@ -38,7 +38,7 @@ public abstract class BaseTest {
 
         URL url = new URL(properties.getProperty(Constants.APPIUM_URL));
 
-        platformName = "android";
+        platformName = "iOS"; // TEST_ONLY
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
                 currentPlatform = Constants.Platform.ANDROID;
