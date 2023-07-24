@@ -28,7 +28,7 @@ public class SignInPage extends BasePage {
     @AndroidFindBy(xpath = ".//android.widget.Button[@text='LOGIN']")
     public WebElement logInButtonTxt;
 
-    @AndroidFindBy(xpath = ".//android.widget.Button[@text='Forgot Password?']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Forgot Password?']")
     public WebElement forgotPwd;
 
     @AndroidFindBy(id = "com.android.permissioncontroller:id/permission_allow_foreground_only_button")
