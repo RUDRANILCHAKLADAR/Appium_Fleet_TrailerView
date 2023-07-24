@@ -12,11 +12,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 public class TestUtility {
@@ -84,14 +81,12 @@ public class TestUtility {
         return true;
     }
 
-    public static void internetOff(AppiumDriver driver){
+    public static void turnOffInternet(AppiumDriver driver){
         ( (AndroidDriver)driver).setConnection(new ConnectionStateBuilder().
                 withWiFiDisabled().withDataDisabled().build());
     }
 
-
-
-    public static void internetOn(AppiumDriver driver){
+    public static void turnOnInternet(AppiumDriver driver){
         ( (AndroidDriver)driver).setConnection(new ConnectionStateBuilder().
                 withWiFiEnabled().withDataEnabled().build());
     }
