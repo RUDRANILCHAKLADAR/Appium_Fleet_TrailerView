@@ -103,7 +103,10 @@ public abstract class BaseTest {
                 basePage.locationPermission.click();
             }
         } else {
-            // todo handle by iOS
+            TestUtility.waitForVisibility(basePage.iOSLocationPermissionAlert, driver);
+            if (TestUtility.isElementPresent(basePage.locationPermission)) {
+                basePage.locationPermission.click();
+            }
         }
     }
 

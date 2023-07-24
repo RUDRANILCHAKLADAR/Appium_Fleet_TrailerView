@@ -50,27 +50,26 @@ public class SignInScreenTest extends BaseTest {
         assertTrue(signInPage.logInButton.isEnabled());
         signInPage.logInButton.click();
         // validation of invalid credentials
-        if(isAndroidPlatform()) {
+//        if(isAndroidPlatform()) {
             TestUtility.waitForVisibility(signInPage.invalidCrednetialErrorTitle, getDriver());
             assertEquals(signInPage.invalidCrednetialErrorMsg.getText(), "The credentials entered do not match our records. Verify your username and password.");
             assertTrue(signInPage.dialogOkButton.isDisplayed());
             signInPage.dialogOkButton.click();
-        } else {
-            // todo handle iOS related code
-        }
+//        } else {
+//            // todo handle iOS related code
+//        }
 
-        // validation of No Network
-        TestUtility.turnOffInternet(getDriver());
-        signInPage.logInButton.click();
+        /* Not written in iOS as iOS driver doesn't support netowrk on/off events */
         if(isAndroidPlatform()) {
-            TestUtility.waitForVisibility(signInPage.noNetworkErrorTitle, getDriver());
-            assertEquals(signInPage.noNetworkErrorMsg.getText(), "Please check your network connection and try again.");
-            assertTrue(signInPage.dialogOkButton.isDisplayed());
-            signInPage.dialogOkButton.click();
-        } else {
-            // todo handle iOS related code
+            // validation of No Network
+            TestUtility.turnOffInternet(getDriver());
+            signInPage.logInButton.click();
+                TestUtility.waitForVisibility(signInPage.noNetworkErrorTitle, getDriver());
+                assertEquals(signInPage.noNetworkErrorMsg.getText(), "Please check your network connection and try again.");
+                assertTrue(signInPage.dialogOkButton.isDisplayed());
+                signInPage.dialogOkButton.click();
+            TestUtility.turnOnInternet(getDriver());
         }
-        TestUtility.turnOnInternet(getDriver());
 
         // validate network error
         signInPage.userNameEditText.clear();

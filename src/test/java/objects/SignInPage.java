@@ -43,12 +43,15 @@ public class SignInPage extends BasePage {
     public WebElement permission_access;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Invalid Credentials']")
+    @iOSXCUITFindBy(iOSNsPredicate = "label == \"Error\" AND name == \"Error\" AND type == \"XCUIElementTypeAlert\"")
     public WebElement invalidCrednetialErrorTitle;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='The credentials entered do not match our records. Verify your username and password.']")
+    @iOSXCUITFindBy(id = "The credentials entered do not match our records. Verify your username and password.")
     public WebElement invalidCrednetialErrorMsg;
 
     @AndroidFindBy(xpath = ".//android.widget.Button[@index='1']")
+    @iOSXCUITFindBy(id = "OK")
     public WebElement dialogOkButton;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Network Error']")
@@ -64,5 +67,6 @@ public class SignInPage extends BasePage {
     public WebElement otherErrorMsg;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Assets']")
+    @iOSXCUITFindBy(id = "home_nav_title")
     public WebElement assetListScreenTitle;
 }
