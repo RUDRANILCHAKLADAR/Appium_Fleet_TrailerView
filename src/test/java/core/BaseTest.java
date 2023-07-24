@@ -49,7 +49,7 @@ public abstract class BaseTest {
                 options.setCapability("appPackage", "com.spireon.atidriver.stage");
                 options.setAppWaitPackage("com.spireon.atidriver.stage");
                 if (System.getenv("BITRISE_APK_PATH") == null && System.getenv("BITRISE_SOURCE_DIR") == null) {
-                    options.setApp(properties.getProperty(Constants.ANDROID_APP_PATH));
+                    options.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.ANDROID_APP_PATH));
                 } else if (System.getenv("BITRISE_APK_PATH") != null) {
                     options.setApp(System.getenv("BITRISE_APK_PATH"));
                 } else {
