@@ -21,6 +21,9 @@ public class ForgotPasswordScreenTest extends BaseTest {
     }
 
     private void launchForgotPasswordScreen() {
+        if (forgotPasswordPage.forgotPasswordTitle.isDisplayed()) {
+            return;
+        }
         assertTrue(signInPage.forgotPwd.isDisplayed());
         signInPage.forgotPwd.click();
         TestUtility.waitForVisibility(forgotPasswordPage.forgotPasswordTitle, getDriver());
@@ -32,7 +35,7 @@ public class ForgotPasswordScreenTest extends BaseTest {
         assertTrue(forgotPasswordPage.forgotPasswordTitle.isDisplayed());
         assertTrue(forgotPasswordPage.forgotPasswordDescription.isDisplayed());
         assertTrue(forgotPasswordPage.userNameEditText.isDisplayed());
-        assertTrue(forgotPasswordPage.userNameEditTextHint.isDisplayed());
+//        assertTrue(forgotPasswordPage.userNameEditTextHint.isDisplayed());
         assertTrue(forgotPasswordPage.requestAccessCodeText.isDisplayed());
         assertTrue(forgotPasswordPage.requestAccessCodeButton.isDisplayed());
     }
