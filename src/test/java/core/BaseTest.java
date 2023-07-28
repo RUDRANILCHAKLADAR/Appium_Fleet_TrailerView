@@ -47,6 +47,7 @@ public abstract class BaseTest {
                 options.setAutomationName(properties.getProperty(Constants.ANDROID_AUTOMATION_DRIVER));
                 options.setAppWaitForLaunch(true);
                 options.setCapability("appPackage", "com.spireon.atidriver.stage");
+                options.setCapability("appium:disableIdLocatorAutocompletion", true);
                 options.setAppWaitPackage("com.spireon.atidriver.stage");
                 if (System.getenv("BITRISE_APK_PATH") == null && System.getenv("BITRISE_SOURCE_DIR") == null) {
                     options.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.ANDROID_APP_PATH));

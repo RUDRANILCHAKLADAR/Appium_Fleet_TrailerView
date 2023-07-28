@@ -4,6 +4,7 @@ import core.BaseTest;
 import core.TestUtility;
 import objects.ForgotPasswordPage;
 import objects.SignInPage;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -39,11 +40,10 @@ public class ForgotPasswordScreenTest extends BaseTest {
 
     @Test(priority = 2)
     public void testLoginErrorValidation(){
-        launchForgotPasswordScreen();
 
         forgotPasswordPage.userNameEditText.clear();
 
-        forgotPasswordPage.userNameEditText.sendKeys("123");
+        forgotPasswordPage.userNameEditText.sendKeys("000");
         forgotPasswordPage.requestAccessCodeButton.click();
 
         // validation of invalid credentials
@@ -72,13 +72,47 @@ public class ForgotPasswordScreenTest extends BaseTest {
 
     @Test(priority = 3)
     public void testForgotPasswordFlowSuccess() {
-        launchForgotPasswordScreen();
+
         forgotPasswordPage.userNameEditText.clear();
         forgotPasswordPage.userNameEditText.sendKeys("tv_rs_25");
 
         forgotPasswordPage.requestAccessCodeButton.click();
 
         TestUtility.waitForVisibility(forgotPasswordPage.forgotPasswordValidationScreenDescription, getDriver());
+    }
+
+    @Test(priority = 4)
+    public void testRecoverCredentialsScreenUi() {
+
+        assertTrue(forgotPasswordPage.recoverCredentialTitle.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialSubTitle.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialUserName.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialUserNameEditText.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialAccessCodeEditText.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialAccessCode.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialResend.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialResendBtn.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialPwdRequirements.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialAtLeastOneOfEach.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialUpperLowerCase.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialNumberSpecialCharacters.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialCreateNewPwd.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialConfirmNewPwdEditText.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialResetPwdBtn.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialResetPwd.isDisplayed());
+        assertTrue(forgotPasswordPage.recoverCredentialCreateNewPwdEditText.isDisplayed());
+    }
+
+    @Test(priority = 5)
+    public void testEditTextErrorMsgValidation() {
+
+        forgotPasswordPage.recoverCredentialAccessCodeEditText.sendKeys("123");
+        assertTrue(getDriver().findElement(By.xpath(".//android.widget.TextView[@text='Please enter valid 6 digits access code.']")).isDisplayed());
+
+
+        forgotPasswordPage.recoverCredentialCreateNewPwdEditText.sendKeys("test");
+        forgotPasswordPage.recoverCredentialConfirmNewPwdEditText.sendKeys("test12");
+        assertTrue(getDriver().findElement(By.xpath(".//*[contains(@text,'match')]")).isDisplayed());
     }
 
 }
