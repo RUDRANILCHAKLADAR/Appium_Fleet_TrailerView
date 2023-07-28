@@ -68,7 +68,14 @@ public abstract class BaseTest {
                 option.setPlatformVersion(properties.getProperty(Constants.IOS_VERSION));
                 option.setWdaLaunchTimeout(Duration.ofSeconds(30));
                 //option.setApp(System.getProperty("user.dir") + "//App//Fleet Staging.app");
-                option.setApp(properties.getProperty(Constants.IOS_APP_PATH));
+//                option.setApp(properties.getProperty(Constants.IOS_APP_PATH));
+                if(System.getenv("BITRISE_APP_DIR_PATH")==null && System.getenv("BITRISE_SOURCE_DIR")==null){
+                    option.setApp(properties.getProperty(Constants.IOS_APP_PATH));
+                }else if(System.getenv("BITRISE_APP_DIR_PATH")!=null) {
+                    option.setApp(System.getenv("BITRISE_APP_DIR_PATH"));
+                } else {
+                    option.setApp(System.getenv("BITRISE_SOURCE_DIR") + "/src/test/java/binaries/FleetLocate TrailerView Staging.app");
+                }
                 option.autoAcceptAlerts();
                 driver = new IOSDriver(url, option);
             }

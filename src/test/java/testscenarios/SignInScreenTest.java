@@ -89,14 +89,13 @@ public class SignInScreenTest extends BaseTest {
     }
 
     @Test(priority = 3)
-    public void testLogInFlowSuccess() {
+    public void testLogInFlowSuccess() throws InterruptedException {
         signInPage.userNameEditText.clear();
         signInPage.passWordEditText.clear();
         signInPage.userNameEditText.sendKeys("tv_rs_27");
         signInPage.passWordEditText.sendKeys("Spireon@1234");
 
         signInPage.logInButton.click();
-
         disMissLocationPermission(signInPage);
         TestUtility.waitForVisibility(signInPage.assetListScreenTitle, getDriver());
     }

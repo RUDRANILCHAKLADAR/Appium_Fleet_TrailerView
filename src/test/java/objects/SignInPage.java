@@ -16,11 +16,13 @@ public class SignInPage extends BasePage {
     public WebElement signInTitle;
 
     @AndroidFindBy(xpath = ".//android.widget.EditText[1]")
-    @iOSXCUITFindBy(id = "textfield_username")
+//    @iOSXCUITFindBy(id = "textfield_username")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == 'textfield_username' AND type == 'XCUIElementTypeTextField'")
     public WebElement userNameEditText;
 
     @AndroidFindBy(xpath = ".//android.widget.EditText[2]")
-    @iOSXCUITFindBy(id = "textfield_password")
+//    @iOSXCUITFindBy(id = "textfield_password")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == 'textfield_password' AND type == 'XCUIElementTypeSecureTextField'")
     public WebElement passWordEditText;
 
     @AndroidFindBy(xpath = ".//android.widget.Button[@index='0']")
