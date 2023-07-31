@@ -10,9 +10,6 @@ public class SignInPage extends BasePage {
         super(driver);
     }
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Sign In']")
-    public WebElement signInTitle;
-
     @AndroidFindBy(xpath = ".//android.widget.EditText[1]")
     public WebElement userNameEditText;
 
@@ -58,14 +55,7 @@ public class SignInPage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Assets']")
     public WebElement assetListScreenTitle;
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='More Icon']")
-    public WebElement homeMoreButton;
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc=\"Logout Icon\"]")
-    public WebElement logOutButton;
-
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"CONFIRM\"]")
-    public WebElement logOutConfirm;
 
 
 }

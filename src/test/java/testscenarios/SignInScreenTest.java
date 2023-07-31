@@ -82,7 +82,7 @@ public class SignInScreenTest extends BaseTest {
     @Test(priority = 3)
     public void testLogInFlowSuccess() {
 
-        TestUtility.logInUser(signInPage);
+        TestUtility.logInUser(signInPage, "tv_rs_27", "Spireon@1234");
 
         disMissLocationPermission(signInPage);
         TestUtility.waitForVisibility(signInPage.assetListScreenTitle, getDriver());

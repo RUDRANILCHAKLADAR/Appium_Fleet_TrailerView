@@ -120,16 +120,16 @@ public class TestUtility {
                 .release().perform();
     }
 
-    public static void logInUser(SignInPage signInPage) {
-        signInPage.userNameEditText.clear();
-        signInPage.passWordEditText.clear();
-        signInPage.userNameEditText.sendKeys("tv_rs_27");
-        signInPage.passWordEditText.sendKeys("Spireon@1234");
+    public static void logInUser(BasePage basePage, String userName, String pwd) {
+        basePage.userNameEditText.clear();
+        basePage.passWordEditText.clear();
+        basePage.userNameEditText.sendKeys(userName);
+        basePage.passWordEditText.sendKeys(pwd);
 
-        signInPage.logInButton.click();
+        basePage.logInButton.click();
     }
 
-    public static void logOutUser(SignInPage signInPage, AppiumDriver driver) {
+    public static void logOutUser(BasePage signInPage, AppiumDriver driver) {
         signInPage.homeMoreButton.click();
         waitForVisibility(signInPage.logOutButton, driver);
         signInPage.logOutButton.click();
