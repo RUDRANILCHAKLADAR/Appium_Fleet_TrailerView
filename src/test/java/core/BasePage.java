@@ -26,4 +26,26 @@ public class BasePage {
     @AndroidFindBy(id = "com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")
 //    @iOSXCUITFindBy(accessibility = "Allow While Using App")
     public WebElement locationAccuracy;
+
+    @AndroidFindBy(xpath = ".//android.widget.EditText[1]")
+    public WebElement userNameEditText;
+
+    @AndroidFindBy(xpath = ".//android.widget.EditText[2]")
+    public WebElement passWordEditText;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='LOGIN']")
+    public WebElement logInButton;
+
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='More Icon']")
+    public WebElement homeMoreButton;
+
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc=\"Logout Icon\"]")
+    public WebElement logOutButton;
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"CONFIRM\"]")
+    public WebElement logOutConfirm;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Sign In']")
+    public WebElement signInTitle;
+
 }

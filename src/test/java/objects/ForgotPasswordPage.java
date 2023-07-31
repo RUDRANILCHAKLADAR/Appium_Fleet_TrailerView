@@ -60,4 +60,68 @@ public class ForgotPasswordPage extends BasePage {
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Please check your network connection and try again.']")
     public WebElement noNetworkErrorMsg;
+
+    // Forgot password access code validation screen elements
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Recover Credentials']")
+    public WebElement recoverCredentialTitle;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Your access code has been sent to the email on file. If you have not received the email, please check your spam folder. You may resend the email if you still have not received it.']")
+    public WebElement recoverCredentialSubTitle;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Username']")
+    public WebElement recoverCredentialUserName;
+
+    @AndroidFindBy(id = "userNameEditText")
+    public WebElement recoverCredentialUserNameEditText;
+
+    @AndroidFindBy(id = "accessCodeEditText")
+    public WebElement recoverCredentialAccessCodeEditText;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Access Code']")
+    public WebElement recoverCredentialAccessCode;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Resend']")
+    public WebElement recoverCredentialResend;
+
+    @AndroidFindBy(id = "resendButton")
+    public WebElement recoverCredentialResendBtn;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Password Requirements (Minimum 8 Characters)']")
+    public WebElement recoverCredentialPwdRequirements;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='At least 1 of each:']")
+    public WebElement recoverCredentialAtLeastOneOfEach;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='•\t\tUpper case•\t\tLower case']")
+    public WebElement recoverCredentialUpperLowerCase;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='•\t\tNumber•\t\tSpecial character(#?!@\\$%^&*-)']")
+    public WebElement recoverCredentialNumberSpecialCharacters;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Create New Password']")
+    public WebElement recoverCredentialCreateNewPwd;
+
+    @AndroidFindBy(id = "newPwdEditText")
+    public WebElement recoverCredentialCreateNewPwdEditText;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Confirm New Password']")
+    public WebElement recoverCredentialConfirmNewPwd;
+
+    @AndroidFindBy(id = "confirmPwdEditText")
+    public WebElement recoverCredentialConfirmNewPwdEditText;
+
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='RESET PASSWORD']")
+    public WebElement recoverCredentialResetPwd;
+
+    @AndroidFindBy(id = "resetPwdButton")
+    public WebElement recoverCredentialResetPwdBtn;
+
+
+    @AndroidFindBy(accessibility = "back")
+    public WebElement recoverCredentialBackBtn;
+
+
+
+
 }

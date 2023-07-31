@@ -3,6 +3,7 @@ package testscenarios;
 import core.BaseTest;
 import core.TestUtility;
 import objects.SignInPage;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -18,7 +19,7 @@ public class SignInScreenTest extends BaseTest {
 
     @Test(priority = 1)
     public void testUiValidation(){
-//        TestUtility.waitForVisibility(signInPage.signInTitle, getDriver());
+        TestUtility.waitForVisibility(signInPage.signInTitle, getDriver());
         signInPage.signInTitle.isDisplayed();
         signInPage.userNameEditText.isDisplayed();
         assertTrue(signInPage.userNameEditText.isDisplayed());
@@ -29,23 +30,15 @@ public class SignInScreenTest extends BaseTest {
         assertTrue(signInPage.pwdEye.isDisplayed());
         signInPage.pwdEye.click();
         assertTrue(signInPage.logInButton.isDisplayed());
-//        signInPage.logInButton.click();
-//        Activity activity = new Activity("com.spireon.atidriver.stage", "com.spireon.atidriver.cognito.forgotpassword.ForgotPasswordActivity");
-//        activity.setStopApp(false);
-//        ((AndroidDriver)getDriver()).startActivity(activity);
-//        TestUtility.waitFor(60, getDriver());
     }
 
     @Test(priority = 2)
     public void testLoginErrorValidation(){
         assertTrue(signInPage.userNameEditText.isDisplayed());
-        // assert login button is disabled if text boxes are empty
-//        assertFalse(signInPage.logInButton.isEnabled());
+
         signInPage.userNameEditText.clear();
         signInPage.passWordEditText.clear();
         signInPage.userNameEditText.sendKeys("123");
-        // assert login button is disabled if any text box is empty
-//        assertFalse(signInPage.logInButton.isEnabled());
         signInPage.passWordEditText.sendKeys("123");
         assertTrue(signInPage.logInButton.isEnabled());
         signInPage.logInButton.click();
@@ -89,15 +82,18 @@ public class SignInScreenTest extends BaseTest {
     }
 
     @Test(priority = 3)
-    public void testLogInFlowSuccess() throws InterruptedException {
-        signInPage.userNameEditText.clear();
-        signInPage.passWordEditText.clear();
-        signInPage.userNameEditText.sendKeys("tv_rs_27");
-        signInPage.passWordEditText.sendKeys("Spireon@1234");
+    public void testLogInFlowSuccess() {
 
-        signInPage.logInButton.click();
+        TestUtility.logInUser(signInPage, "tv_rs_27", "Spireon@1234");
         disMissLocationPermission(signInPage);
         TestUtility.waitForVisibility(signInPage.assetListScreenTitle, getDriver());
     }
+
+    @AfterClass
+    public void logOutUser() {
+        TestUtility.waitForVisibility(signInPage.homeMoreButton, getDriver());
+        TestUtility.logOutUser(signInPage, getDriver());
+    }
+
 
 }

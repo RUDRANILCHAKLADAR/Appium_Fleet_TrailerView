@@ -25,11 +25,11 @@ public class SignInPage extends BasePage {
     @iOSXCUITFindBy(iOSNsPredicate = "name == 'textfield_password' AND type == 'XCUIElementTypeSecureTextField'")
     public WebElement passWordEditText;
 
-    @AndroidFindBy(xpath = ".//android.widget.Button[@index='0']")
+    @AndroidFindBy(accessibility = "pwdTrailIcon")
     @iOSXCUITFindBy(id = "textfield_password")
     public WebElement pwdEye;
 
-    @AndroidFindBy(xpath = ".//android.widget.Button[@index='1']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='LOGIN']")
     @iOSXCUITFindBy(id = "button_signin")
     public WebElement logInButton;
 
@@ -71,4 +71,8 @@ public class SignInPage extends BasePage {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Assets']")
     @iOSXCUITFindBy(id = "home_nav_title")
     public WebElement assetListScreenTitle;
+
+
+
+
 }
