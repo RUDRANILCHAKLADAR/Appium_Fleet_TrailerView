@@ -106,6 +106,10 @@ public class ForgotPasswordPage extends BasePage {
     public WebElement recoverCredentialResetPwdBtn;
 
 
+    @AndroidFindBy(accessibility = "back")
+    public WebElement recoverCredentialBackBtn;
+
+
 
 
 }

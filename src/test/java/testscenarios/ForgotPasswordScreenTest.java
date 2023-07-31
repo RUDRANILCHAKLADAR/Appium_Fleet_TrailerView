@@ -5,6 +5,7 @@ import core.TestUtility;
 import objects.ForgotPasswordPage;
 import objects.SignInPage;
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -113,6 +114,12 @@ public class ForgotPasswordScreenTest extends BaseTest {
         forgotPasswordPage.recoverCredentialCreateNewPwdEditText.sendKeys("test");
         forgotPasswordPage.recoverCredentialConfirmNewPwdEditText.sendKeys("test12");
         assertTrue(getDriver().findElement(By.xpath(".//*[contains(@text,'match')]")).isDisplayed());
+    }
+
+    @AfterClass
+    public void redirectLoginScreen() {
+        forgotPasswordPage.backButton.click();
+        forgotPasswordPage.recoverCredentialBackBtn.click();
     }
 
 }
