@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>Trailerview_Appium</artifactId>
+    <artifactId>Appium_Fleet_TrailerView</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

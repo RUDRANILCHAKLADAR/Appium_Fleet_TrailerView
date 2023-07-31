@@ -7,6 +7,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.connection.ConnectionStateBuilder;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import objects.SignInPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
@@ -117,6 +118,24 @@ public class TestUtility {
                 .waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000)))
                 .moveTo(PointOption.point(startX, endY))
                 .release().perform();
+    }
+
+    public static void logInUser(SignInPage signInPage) {
+        signInPage.userNameEditText.clear();
+        signInPage.passWordEditText.clear();
+        signInPage.userNameEditText.sendKeys("tv_rs_27");
+        signInPage.passWordEditText.sendKeys("Spireon@1234");
+
+        signInPage.logInButton.click();
+    }
+
+    public static void logOutUser(SignInPage signInPage, AppiumDriver driver) {
+        signInPage.homeMoreButton.click();
+        waitForVisibility(signInPage.logOutButton, driver);
+        signInPage.logOutButton.click();
+        waitForVisibility(signInPage.logOutConfirm, driver);
+        signInPage.logOutConfirm.click();
+        waitForVisibility(signInPage.signInTitle, driver);
     }
 
 }
