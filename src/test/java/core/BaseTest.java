@@ -76,10 +76,11 @@ public abstract class BaseTest {
             default -> throw new Exception("Invalid platform! - " + platformName);
         }
 
-        initPageObject();
+        init();
     }
 
-    protected abstract void initPageObject();
+    protected abstract void init();
+    protected abstract void deInit();
 
     public Constants.Platform getCurrentPlatform() {
         return currentPlatform;
@@ -108,8 +109,10 @@ public abstract class BaseTest {
         }
     }
 
+
     @AfterClass(alwaysRun = true)
     public void tearDown() {
+        deInit();
         if(driver != null) {
             driver.quit();
         }

@@ -13,8 +13,13 @@ public class SignInScreenTest extends BaseTest {
     private SignInPage signInPage;
 
     @Override
-    protected void initPageObject() {
+    protected void init() {
         signInPage = new SignInPage(getDriver());
+    }
+
+    @Override
+    protected void deInit() {
+        logOutUser();
     }
 
     @Test(priority = 1)
@@ -88,8 +93,7 @@ public class SignInScreenTest extends BaseTest {
         TestUtility.waitForVisibility(signInPage.assetListScreenTitle, getDriver());
     }
 
-    @AfterClass
-    public void logOutUser() {
+    private void logOutUser() {
         TestUtility.waitForVisibility(signInPage.homeMoreButton, getDriver());
         TestUtility.logOutUser(signInPage, getDriver());
     }
