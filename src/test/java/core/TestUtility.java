@@ -11,6 +11,7 @@ import io.appium.java_client.touch.offset.PointOption;
 import objects.SignInPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -123,6 +124,7 @@ public class TestUtility {
 
     public static void logInUser(BasePage basePage, String userName, String pwd) {
         basePage.userNameEditText.clear();
+        basePage.userNameEditText.clear();
         basePage.passWordEditText.clear();
         basePage.userNameEditText.sendKeys(userName);
         basePage.passWordEditText.sendKeys(pwd);
@@ -133,8 +135,19 @@ public class TestUtility {
     public static void logOutUser(BasePage signInPage, AppiumDriver driver) {
         signInPage.homeMoreButton.click();
         waitForVisibility(signInPage.logOutButton, driver);
-        signInPage.logOutButton.click();
-        waitForVisibility(signInPage.logOutConfirm, driver);
+        System.out.println("**** Platform:-" + Platform.getCurrent().name());
+        System.out.println("**** Platform:-" + Constants.Platform.getPlatformFromName(Platform.getCurrent().name()).getPlatformName());
+
+        if (Constants.Platform.getPlatformFromName(Platform.getCurrent().name()) == Constants.Platform.ANDROID) {
+            signInPage.logOutButton.click();
+            waitForVisibility(signInPage.logOutConfirm, driver);
+        } else {
+            // iOS Platform
+            waitForVisibility(signInPage.logOutButton, driver);
+            signInPage.logOutButton.click();
+            waitForVisibility(signInPage.logoutAlert, driver);
+            signInPage.logoutAlertMessage.isDisplayed();
+        }
         signInPage.logOutConfirm.click();
         waitForVisibility(signInPage.signInTitle, driver);
     }
