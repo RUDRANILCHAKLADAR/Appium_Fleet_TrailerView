@@ -13,8 +13,13 @@ public class SignInScreenTest extends BaseTest {
     private SignInPage signInPage;
 
     @Override
-    protected void initPageObject() {
+    protected void init() {
         signInPage = new SignInPage(getDriver());
+    }
+
+    @Override
+    protected void deInit() {
+        logOutUser();
     }
 
     @Test(priority = 1)
@@ -96,6 +101,4 @@ public class SignInScreenTest extends BaseTest {
             TestUtility.logOutUser(signInPage, getDriver());
         }
     }
-
-
 }

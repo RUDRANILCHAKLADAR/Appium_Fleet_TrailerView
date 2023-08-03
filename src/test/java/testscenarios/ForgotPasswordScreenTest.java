@@ -17,9 +17,14 @@ public class ForgotPasswordScreenTest extends BaseTest {
     private SignInPage signInPage;
 
     @Override
-    protected void initPageObject() {
+    protected void init() {
         signInPage = new SignInPage(getDriver());
         forgotPasswordPage = new ForgotPasswordPage(getDriver());
+    }
+
+    @Override
+    protected void deInit() {
+        redirectLoginScreen();
     }
 
     private void launchForgotPasswordScreen() {
@@ -119,8 +124,7 @@ public class ForgotPasswordScreenTest extends BaseTest {
         assertTrue(getDriver().findElement(By.xpath(".//*[contains(@text,'match')]")).isDisplayed());
     }
 
-    @AfterClass
-    public void redirectLoginScreen() {
+    private void redirectLoginScreen() {
         forgotPasswordPage.backButton.click();
         forgotPasswordPage.recoverCredentialBackBtn.click();
     }
