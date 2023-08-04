@@ -43,4 +43,7 @@ public class BasePage {
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Sign In']")
     public WebElement signInTitle;
 
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Forgot Password?']")
+    public WebElement forgotPwd;
+
 }

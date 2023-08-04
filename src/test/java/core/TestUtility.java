@@ -125,17 +125,16 @@ public class TestUtility {
         basePage.passWordEditText.clear();
         basePage.userNameEditText.sendKeys(userName);
         basePage.passWordEditText.sendKeys(pwd);
-
         basePage.logInButton.click();
     }
 
-    public static void logOutUser(BasePage signInPage, AppiumDriver driver) {
-        signInPage.homeMoreButton.click();
-        waitForVisibility(signInPage.logOutButton, driver);
-        signInPage.logOutButton.click();
-        waitForVisibility(signInPage.logOutConfirm, driver);
-        signInPage.logOutConfirm.click();
-        waitForVisibility(signInPage.signInTitle, driver);
+    public static void logOutUser(BasePage basePage, AppiumDriver driver) {
+        basePage.homeMoreButton.click();
+        waitForVisibility(basePage.logOutButton, driver);
+        basePage.logOutButton.click();
+        waitForVisibility(basePage.logOutConfirm, driver);
+        basePage.logOutConfirm.click();
+        waitForVisibility(basePage.forgotPwd, driver);
     }
 
 }
