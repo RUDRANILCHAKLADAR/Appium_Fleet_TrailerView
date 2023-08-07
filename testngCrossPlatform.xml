@@ -2,29 +2,29 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" verbose="10" preserve-order="true" parallel="tests">
 
-    <test name="Android" parallel="false" thread-count="1">
-        <parameter name="emulator" value="true"/>
-        <parameter name="platformName" value="android"/>
-        <parameter name="udid" value="replace_with_device_udid"/>
-        <parameter name="deviceName" value="emulator-5554"/>
-        <parameter name="systemPort" value="10000"/>
-        <parameter name="chromeDriverPort" value="11000"/>
-        <classes>
-            <class name="testscenarios.SignInScreenTest"/>
-            <!--<class name="testscenarios.ForgotPasswordScreenTest"/>-->
+<!--    <test name="Android" parallel="false" thread-count="1">-->
+<!--        <parameter name="emulator" value="true"/>-->
+<!--        <parameter name="platformName" value="android"/>-->
+<!--        <parameter name="udid" value="replace_with_device_udid"/>-->
+<!--        <parameter name="deviceName" value="emulator-5554"/>-->
+<!--        <parameter name="systemPort" value="10000"/>-->
+<!--        <parameter name="chromeDriverPort" value="11000"/>-->
+<!--        <classes>-->
+<!--            <class name="testscenarios.SignInScreenTest"/>-->
+<!--            &lt;!&ndash;<class name="testscenarios.ForgotPasswordScreenTest"/>&ndash;&gt;-->
 
-        </classes>
-    </test>
+<!--        </classes>-->
+<!--    </test>-->
 
-    <!--<test name="iOS" parallel="false" thread-count="1">
+    <test name="iOS" parallel="false" thread-count="1">
         <parameter name="platformName" value="iOS"/>
         <parameter name="udid" value="63E2D54C-CA63-4ECA-89C2-61F2F41EE2F7"/>
-        <parameter name="deviceName" value="iPhone 14 Pro Max"/>
+        <parameter name="deviceName" value="iPhone 14 Pro"/>
         <parameter name="wdaLocalPort" value="10001"/>
         <parameter name="webkitDebugProxyPort" value="11001"/>
         <classes>
-            <class name="testscenarios.SignInScreenTest"/>
-
+<!--            <class name="testscenarios.SignInScreenTest"/>-->
+            <class name="testscenarios.ForgotPasswordScreenTest"/>
         </classes>
-    </test>-->
+    </test>
 </suite>

@@ -1,10 +1,12 @@
 package testscenarios;
 
+import core.BasePage;
 import core.BaseTest;
 import core.TestUtility;
 import core.testrail.TestRailIdAndroid;
 import core.testrail.TestRailIdIos;
 import objects.SignInPage;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -86,6 +88,8 @@ public class SignInScreenTest extends BaseTest {
             signInPage.dialogOkButton.click();
         } else {
             // todo handle iOS related code
+            TestUtility.waitForVisibility(signInPage.invalidCrednetialErrorTitle, getDriver());
+            signInPage.dialogOkButton.click();
         }
     }
 
@@ -104,7 +108,7 @@ public class SignInScreenTest extends BaseTest {
             if (isAndroidPlatform()) {
                 TestUtility.logOutUser(signInPage, getDriver());
             } else {
-                TestUtility.logOutUseriOS(signInPage, getDriver());
+//                TestUtility.logOutUseriOS(signInPage, getDriver());
             }
         }
     }

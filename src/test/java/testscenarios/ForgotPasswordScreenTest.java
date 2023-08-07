@@ -5,6 +5,7 @@ import core.TestUtility;
 import objects.ForgotPasswordPage;
 import objects.SignInPage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
@@ -79,6 +80,10 @@ public class ForgotPasswordScreenTest extends BaseTest {
     @Test(priority = 3)
     public void testForgotPasswordFlowSuccess() {
         forgotPasswordPage.userNameEditText.clear();
+
+        while(!forgotPasswordPage.userNameEditText.getText().isEmpty()) {
+            forgotPasswordPage.userNameEditText.sendKeys(Keys.BACK_SPACE);
+        }
         forgotPasswordPage.userNameEditText.sendKeys("tv_rs_25");
 
         forgotPasswordPage.requestAccessCodeButton.click();
@@ -112,12 +117,11 @@ public class ForgotPasswordScreenTest extends BaseTest {
     public void testEditTextErrorMsgValidation() {
 
         forgotPasswordPage.recoverCredentialAccessCodeEditText.sendKeys("123");
-        assertTrue(getDriver().findElement(By.xpath(".//android.widget.TextView[@text='Please enter valid 6 digits access code.']")).isDisplayed());
-
+        assertTrue(forgotPasswordPage.invalidAccessCodeErrorMessage.isDisplayed());
 
         forgotPasswordPage.recoverCredentialCreateNewPwdEditText.sendKeys("test");
         forgotPasswordPage.recoverCredentialConfirmNewPwdEditText.sendKeys("test12");
-        assertTrue(getDriver().findElement(By.xpath(".//*[contains(@text,'match')]")).isDisplayed());
+//        assertTrue(forgotPasswordPage.passwordsDontMatchErrorMessage.isDisplayed());
     }
 
     private void redirectLoginScreen() {

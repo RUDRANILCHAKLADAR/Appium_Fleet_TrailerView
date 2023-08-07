@@ -143,15 +143,6 @@ public class TestUtility {
 
     public static void logOutUseriOS(BasePage basePage, AppiumDriver driver) {
         basePage.homeMoreButton.click();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        waitForVisibility(basePage.logOutButton, driver);
-        while (!basePage.logOutButton.isDisplayed()) {
-            basePage.homeMoreButton.click();
-        }
         if (basePage.logOutButton.isDisplayed()) {
             basePage.logOutButton.click();
         }

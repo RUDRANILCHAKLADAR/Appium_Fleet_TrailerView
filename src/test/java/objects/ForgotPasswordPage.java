@@ -65,64 +65,97 @@ public class ForgotPasswordPage extends BasePage {
     // Forgot password access code validation screen elements
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Recover Credentials']")
+    @iOSXCUITFindBy(id = "text_recover_credential_title")
     public WebElement recoverCredentialTitle;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Your access code has been sent to the email on file. If you have not received the email, please check your spam folder. You may resend the email if you still have not received it.']")
+    @iOSXCUITFindBy(id = "text_recover_credential_subtitle")
     public WebElement recoverCredentialSubTitle;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Username']")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_username\" AND type == \"XCUIElementTypeStaticText\"")
     public WebElement recoverCredentialUserName;
 
     @AndroidFindBy(id = "userNameEditText")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_username\" AND type == \"XCUIElementTypeTextField\"")
     public WebElement recoverCredentialUserNameEditText;
 
     @AndroidFindBy(id = "accessCodeEditText")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_accesscode\" AND type == \"XCUIElementTypeTextField\"")
     public WebElement recoverCredentialAccessCodeEditText;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Access Code']")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_accesscode\" AND type == \"XCUIElementTypeTextField\"")
     public WebElement recoverCredentialAccessCode;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Resend']")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_accesscode\" AND type == \"XCUIElementTypeButton\"")
     public WebElement recoverCredentialResend;
 
     @AndroidFindBy(id = "resendButton")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_accesscode\" AND type == \"XCUIElementTypeButton\"")
     public WebElement recoverCredentialResendBtn;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Password Requirements (Minimum 8 Characters)']")
+    @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialPwdRequirements;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='At least 1 of each:']")
+    @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialAtLeastOneOfEach;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='•\t\tUpper case•\t\tLower case']")
+    @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialUpperLowerCase;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='•\t\tNumber•\t\tSpecial character(#?!@\\$%^&*-)']")
+    @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialNumberSpecialCharacters;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Create New Password']")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_new_password\" AND type == \"XCUIElementTypeSecureTextField\"")
     public WebElement recoverCredentialCreateNewPwd;
 
     @AndroidFindBy(id = "newPwdEditText")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_new_password\" AND type == \"XCUIElementTypeSecureTextField\"")
     public WebElement recoverCredentialCreateNewPwdEditText;
 
+    @AndroidFindBy(id = "") // ToDo - add android locator
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_new_password\" AND type == \"XCUIElementTypeButton\"")
+    public WebElement recoverCredentialCreateNewPwdHideShowText;
+
+
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Confirm New Password']")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_confirm_password\" AND type == \"XCUIElementTypeSecureTextField\"")
     public WebElement recoverCredentialConfirmNewPwd;
 
     @AndroidFindBy(id = "confirmPwdEditText")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_confirm_password\" AND type == \"XCUIElementTypeSecureTextField\"")
     public WebElement recoverCredentialConfirmNewPwdEditText;
 
+    @AndroidFindBy(id = "") // ToDo - add android locator
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_confirm_password\" AND type == \"XCUIElementTypeButton\"")
+    public WebElement recoverCredentialConfirmNewPwdHideShowText;
+
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='RESET PASSWORD']")
+    @iOSXCUITFindBy(id = "button_recover_credential_submit")
     public WebElement recoverCredentialResetPwd;
 
     @AndroidFindBy(id = "resetPwdButton")
+    @iOSXCUITFindBy(id = "button_recover_credential_submit")
     public WebElement recoverCredentialResetPwdBtn;
 
 
     @AndroidFindBy(accessibility = "back")
+    @iOSXCUITFindBy(id = "button_back")
     public WebElement recoverCredentialBackBtn;
 
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Please enter valid 6 digits access code.']")
+    @iOSXCUITFindBy(iOSNsPredicate = "label == \"Please enter valid 6 digits access code.\" AND type == \"XCUIElementTypeStaticText\"")
+    public WebElement invalidAccessCodeErrorMessage;
 
-
+    @AndroidFindBy(xpath = ".//*[contains(@text,'match')]")
+    @iOSXCUITFindBy(iOSNsPredicate = "label == \"Passwords don't match.\" AND type == \"XCUIElementTypeStaticText\"")
+    public WebElement passwordsDontMatchErrorMessage;
 
 }

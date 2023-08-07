@@ -45,8 +45,8 @@ public class BasePage {
     public WebElement homeMoreButton;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc=\"Logout Icon\"]")
-//    @iOSXCUITFindBy(iOSNsPredicate = "name == 'Logout' AND type == 'XCUIElementTypeButton'")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"Logout\"]")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == 'Logout' AND type == 'XCUIElementTypeButton'")
+//    @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@name=\"Logout\"]")
     public WebElement logOutButton;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"CONFIRM\"]")

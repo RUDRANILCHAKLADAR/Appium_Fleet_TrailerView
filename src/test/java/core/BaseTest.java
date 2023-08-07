@@ -82,9 +82,8 @@ public abstract class BaseTest {
                 option.setAutomationName(properties.getProperty(Constants.IOS_AUTOMATION_DRIVER));
                 option.setPlatformVersion(properties.getProperty(Constants.IOS_VERSION));
                 option.setWdaLaunchTimeout(Duration.ofSeconds(30));
-                //option.setApp(System.getProperty("user.dir") + "//App//Fleet Staging.app");
                 option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
-                option.autoAcceptAlerts();
+                option.setAutoAcceptAlerts(false);
                 driver = new IOSDriver(url, option);
             }
             default -> throw new Exception("Invalid platform! - " + platformName);
@@ -172,6 +171,11 @@ public abstract class BaseTest {
             }
         } else {
             // todo handle by iOS
+            TestUtility.waitForVisibility(basePage.iOSLocationPermissionAlert, driver);
+            TestUtility.waitForVisibility(basePage.locationPermission, driver);
+            if (TestUtility.isElementPresent(basePage.locationPermission)) {
+                basePage.locationPermission.click();
+            }
         }
     }
 
