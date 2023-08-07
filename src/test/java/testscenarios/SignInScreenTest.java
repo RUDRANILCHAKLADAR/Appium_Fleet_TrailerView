@@ -2,9 +2,9 @@ package testscenarios;
 
 import core.BaseTest;
 import core.TestUtility;
-import core.testrail.TestRailId;
+import core.testrail.TestRailIdAndroid;
+import core.testrail.TestRailIdIos;
 import objects.SignInPage;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -24,7 +24,8 @@ public class SignInScreenTest extends BaseTest {
     }
 
     @Test(priority = 1)
-    @TestRailId( tags = {"146958", "146962", "147715", "147716"})
+    @TestRailIdAndroid( androidTags = {"146958", "146962"})
+    @TestRailIdIos( iOSTags = {"147708", "147709"})
     public void testUiValidation(){
         assertTrue(signInPage.userNameEditText.isDisplayed());
         TestUtility.waitForVisibility(signInPage.userNameEditText, getDriver());

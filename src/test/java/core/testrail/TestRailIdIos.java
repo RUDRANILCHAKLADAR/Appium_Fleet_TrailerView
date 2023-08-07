@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface TestRailId {
+public @interface TestRailIdIos {
     int testRailId() default 0;
-    String[] tags() default "none";
+    String[] iOSTags() default "none";
 }
