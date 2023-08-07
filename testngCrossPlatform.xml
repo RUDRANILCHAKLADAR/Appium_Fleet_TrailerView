@@ -24,7 +24,8 @@
         <parameter name="webkitDebugProxyPort" value="11001"/>
         <classes>
 <!--            <class name="testscenarios.SignInScreenTest"/>-->
-            <class name="testscenarios.ForgotPasswordScreenTest"/>
+<!--            <class name="testscenarios.ForgotPasswordScreenTest"/>-->
+            <class name="testscenarios.VehicleListScreenTest"/>
         </classes>
     </test>
 </suite>
