@@ -1,22 +1,30 @@
 package core;
 
+import core.testrail.APIException;
+import core.testrail.TestRailAPI;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
+import org.testng.*;
 import org.testng.annotations.*;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
+
 
 public abstract class BaseTest {
 
     private Constants.Platform currentPlatform = Constants.Platform.ANDROID;
 
     private AppiumDriver driver;
+    private TestRailAPI testRailAPI;
+    private boolean isRunTestRailSuite = true;
 
 
     @Parameters({"emulator", "platformName", "udid", "deviceName", "systemPort", "wdaLocalPort", "webkitDebugProxyPort"})
@@ -26,6 +34,8 @@ public abstract class BaseTest {
                            @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort) throws Exception {
 
         Properties properties = new Properties();
+        testRailAPI = new TestRailAPI();
+        isRunTestRailSuite = false;
 //        String strFile = "logs" + File.separator + platformName + "_" + deviceName;
 //        File logFile = new File(strFile);
 //        if (!logFile.exists()) {
@@ -37,7 +47,6 @@ public abstract class BaseTest {
 
         URL url = new URL(properties.getProperty(Constants.APPIUM_URL));
 
-        platformName = "iOS"; // TEST_ONLY
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
                 currentPlatform = Constants.Platform.ANDROID;
@@ -68,10 +77,8 @@ public abstract class BaseTest {
                 option.setAutomationName(properties.getProperty(Constants.IOS_AUTOMATION_DRIVER));
                 option.setPlatformVersion(properties.getProperty(Constants.IOS_VERSION));
                 option.setWdaLaunchTimeout(Duration.ofSeconds(30));
-                //option.setApp(System.getProperty("user.dir") + "//App//Fleet Staging.app");
-//                option.setApp(properties.getProperty(Constants.IOS_APP_PATH));
                 if(System.getenv("BITRISE_APP_DIR_PATH")==null && System.getenv("BITRISE_SOURCE_DIR")==null){
-                    option.setApp(properties.getProperty(Constants.IOS_APP_PATH));
+                    option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
                 }else if(System.getenv("BITRISE_APP_DIR_PATH")!=null) {
                     option.setApp(System.getenv("BITRISE_APP_DIR_PATH"));
                 } else {
@@ -86,8 +93,8 @@ public abstract class BaseTest {
         init();
     }
 
-    protected abstract void init();
-    protected abstract void deInit();
+    protected  void init(){};
+    protected  void deInit(){};
 
     public Constants.Platform getCurrentPlatform() {
         return currentPlatform;
@@ -128,6 +135,26 @@ public abstract class BaseTest {
         }
     }
 
+    @BeforeMethod(alwaysRun = true)
+    public void beforeTest(ITestContext ctx, Method testMethod) {
+        if(isRunTestRailSuite) {
+            testRailAPI.beforeTest(ctx, testMethod);
+        }
+    }
 
+    @AfterMethod (alwaysRun = true)
+    public void afterTest(ITestResult testResult, ITestContext
+            context, Method testMethod) {
+        if(isRunTestRailSuite) {
+            testRailAPI.afterTest(context, testResult, testMethod);
+        }
+    }
+
+    @BeforeSuite
+    public void createTestRunSuite(ITestContext ctx) throws APIException, IOException {
+        if(isRunTestRailSuite) {
+            testRailAPI.createTestRunSuite(ctx);
+        }
+    }
 
 }

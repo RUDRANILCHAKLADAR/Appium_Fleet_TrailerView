@@ -56,10 +56,12 @@ public class BasePage {
     @iOSXCUITFindBy(id = "text_signin_title")
     public WebElement signInTitle;
 
-
     @iOSXCUITFindBy(iOSNsPredicate = "name == 'Logout' AND type == 'XCUIElementTypeAlert'")
     public WebElement logoutAlert;
 
     @iOSXCUITFindBy(iOSNsPredicate = "label == 'Are you sure you want to logout?'")
     public WebElement logoutAlertMessage;
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Forgot Password?']")
+    public WebElement forgotPwd;
+
 }

@@ -2,6 +2,7 @@ package testscenarios;
 
 import core.BaseTest;
 import core.TestUtility;
+import core.testrail.TestRailId;
 import objects.SignInPage;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
@@ -23,6 +24,7 @@ public class SignInScreenTest extends BaseTest {
     }
 
     @Test(priority = 1)
+    @TestRailId( tags = {"146958", "146962", "147715", "147716"})
     public void testUiValidation(){
         TestUtility.waitForVisibility(signInPage.signInTitle, getDriver());
         signInPage.signInTitle.isDisplayed();
@@ -30,7 +32,7 @@ public class SignInScreenTest extends BaseTest {
         assertTrue(signInPage.userNameEditText.isDisplayed());
         TestUtility.waitForVisibility(signInPage.userNameEditText, getDriver());
         signInPage.userNameEditText.sendKeys("tv_rs_27");
-        signInPage.userNameEditText.isDisplayed();
+        assertTrue(signInPage.userNameEditText.isDisplayed());
         signInPage.passWordEditText.sendKeys("Spireon@123");
         assertTrue(signInPage.pwdEye.isDisplayed());
         signInPage.pwdEye.click();
