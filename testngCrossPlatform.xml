@@ -3,26 +3,26 @@
 <suite name="All Test Suite" parallel="tests">
 
     <test verbose="2" preserve-order="true" name="Trailerview-Appium"/>
-    <test name="Pixel_2">
-        <parameter name="emulator" value="true"/>
-        <parameter name="platformName" value="android"/>
-        <parameter name="udid" value="replace_with_device_udid"/>
-        <parameter name="deviceName" value="emulator-5554"/>
-        <parameter name="systemPort" value="10000"/>
-        <parameter name="chromeDriverPort" value="11000"/>
-        <classes>
-            <class name="testscenarios.SignInScreenTest"/>
-        </classes>
-    </test>
-    </test>
-    <test name="iPhone14">
+<!--    <test name="Android Suite">-->
+<!--        <parameter name="emulator" value="true"/>-->
+<!--        <parameter name="platformName" value="android"/>-->
+<!--        <parameter name="udid" value="replace_with_device_udid"/>-->
+<!--        <parameter name="deviceName" value="emulator-5554"/>-->
+<!--        <parameter name="systemPort" value="10000"/>-->
+<!--        <parameter name="chromeDriverPort" value="11000"/>-->
+<!--        <classes>-->
+<!--            <class name="testscenarios.SignInScreenTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+    <test name="iOS Suite">
         <parameter name="platformName" value="iOS" />
         <parameter name="udid" value="63E2D54C-CA63-4ECA-89C2-61F2F41EE2F7" />
-        <parameter name="deviceName" value="iPhone 14" />
+        <parameter name="deviceName" value="iPhone 14 Pro" />
         <parameter name="wdaLocalPort" value="10001" />
         <parameter name="webkitDebugProxyPort" value="11001" />
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
+<!--            <class name="testscenarios.ForgotPasswordScreenTest"/>-->
         </classes>
     </test>
 </suite>

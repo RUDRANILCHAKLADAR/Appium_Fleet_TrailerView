@@ -34,8 +34,8 @@ public abstract class BaseTest {
                            @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort) throws Exception {
 
         Properties properties = new Properties();
-        testRailAPI = new TestRailAPI();
-        isRunTestRailSuite = false;
+//        testRailAPI = new TestRailAPI();
+//        isRunTestRailSuite = false;
 //        String strFile = "logs" + File.separator + platformName + "_" + deviceName;
 //        File logFile = new File(strFile);
 //        if (!logFile.exists()) {
@@ -135,14 +135,14 @@ public abstract class BaseTest {
         }
     }
 
-    @BeforeMethod(alwaysRun = true)
+//    @BeforeMethod(alwaysRun = true)
     public void beforeTest(ITestContext ctx, Method testMethod) {
         if(isRunTestRailSuite) {
             testRailAPI.beforeTest(ctx, testMethod);
         }
     }
 
-    @AfterMethod (alwaysRun = true)
+//    @AfterMethod (alwaysRun = true)
     public void afterTest(ITestResult testResult, ITestContext
             context, Method testMethod) {
         if(isRunTestRailSuite) {
@@ -150,7 +150,7 @@ public abstract class BaseTest {
         }
     }
 
-    @BeforeSuite
+//    @BeforeSuite
     public void createTestRunSuite(ITestContext ctx) throws APIException, IOException {
         if(isRunTestRailSuite) {
             testRailAPI.createTestRunSuite(ctx);

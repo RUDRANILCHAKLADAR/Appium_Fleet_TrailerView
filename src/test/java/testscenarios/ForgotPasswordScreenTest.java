@@ -28,9 +28,9 @@ public class ForgotPasswordScreenTest extends BaseTest {
     }
 
     private void launchForgotPasswordScreen() {
-        if (forgotPasswordPage.forgotPasswordTitle.isDisplayed()) {
-            return;
-        }
+//        if (forgotPasswordPage.forgotPasswordTitle.isDisplayed()) {
+//            return;
+//        }
         assertTrue(signInPage.forgotPwd.isDisplayed());
         signInPage.forgotPwd.click();
         TestUtility.waitForVisibility(forgotPasswordPage.forgotPasswordTitle, getDriver());
@@ -56,32 +56,28 @@ public class ForgotPasswordScreenTest extends BaseTest {
         forgotPasswordPage.requestAccessCodeButton.click();
 
         // validation of invalid credentials
-        if(isAndroidPlatform()) {
-            TestUtility.waitForVisibility(forgotPasswordPage.errorTitle, getDriver());
-            assertEquals(forgotPasswordPage.userNotExistsErrorMsg.getText(), "Unable to send password reset.");
-            assertTrue(forgotPasswordPage.errorDialogOk.isDisplayed());
-            forgotPasswordPage.errorDialogOk.click();
-        } else {
-            // todo handle iOS related code
-        }
+        TestUtility.waitForVisibility(forgotPasswordPage.errorTitle, getDriver());
+        assertEquals(forgotPasswordPage.userNotExistsErrorMsg.getText(), "Unable to send password reset.");
+        assertTrue(forgotPasswordPage.errorDialogOk.isDisplayed());
+        forgotPasswordPage.errorDialogOk.click();
 
         // validation of No Network
-        TestUtility.turnOffInternet(getDriver());
-        forgotPasswordPage.requestAccessCodeButton.click();
+
         if(isAndroidPlatform()) {
+            TestUtility.turnOffInternet(getDriver());
+            forgotPasswordPage.requestAccessCodeButton.click();
             TestUtility.waitForVisibility(forgotPasswordPage.noNetworkErrorTitle, getDriver());
             assertEquals(forgotPasswordPage.noNetworkErrorMsg.getText(), "Please check your network connection and try again.");
             assertTrue(forgotPasswordPage.errorDialogOk.isDisplayed());
             forgotPasswordPage.errorDialogOk.click();
+            TestUtility.turnOnInternet(getDriver());
         } else {
             // todo handle iOS related code
         }
-        TestUtility.turnOnInternet(getDriver());
     }
 
     @Test(priority = 3)
     public void testForgotPasswordFlowSuccess() {
-
         forgotPasswordPage.userNameEditText.clear();
         forgotPasswordPage.userNameEditText.sendKeys("tv_rs_25");
 

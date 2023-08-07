@@ -12,7 +12,8 @@ public class ForgotPasswordPage extends BasePage {
     }
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Recover Credentials']")
-    @iOSXCUITFindBy(id = "text_recover_credential_request_title")
+//    @iOSXCUITFindBy(id = "text_recover_credential_request_title")
+    @iOSXCUITFindBy(iOSNsPredicate = "label == 'Recover Credentials' AND type == 'XCUIElementTypeStaticText'")
     public WebElement forgotPasswordTitle;
 
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Your access code has been sent to the email on file. If you have not received the email, please check your spam folder. You may resend the email if you still have not received it.']")

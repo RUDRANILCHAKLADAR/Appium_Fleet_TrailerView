@@ -40,7 +40,8 @@ public class BasePage {
     public WebElement logInButton;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='More Icon']")
-    @iOSXCUITFindBy(iOSNsPredicate = "name == 'ic_dots' AND type == 'XCUIElementTypeButton'")
+    @iOSXCUITFindBy(id = "ic_dots")
+    //    @iOSXCUITFindBy(iOSNsPredicate = "name == 'ic_dots' AND type == 'XCUIElementTypeButton'")
     public WebElement homeMoreButton;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc=\"Logout Icon\"]")
@@ -62,6 +63,7 @@ public class BasePage {
     @iOSXCUITFindBy(iOSNsPredicate = "label == 'Are you sure you want to logout?'")
     public WebElement logoutAlertMessage;
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Forgot Password?']")
+    @iOSXCUITFindBy(id = "button_signin_forgot_password")
     public WebElement forgotPwd;
 
 }

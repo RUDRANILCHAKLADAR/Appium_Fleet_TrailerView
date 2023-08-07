@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
+
 public class TestUtility {
 
     public static void waitFor(int waitTime, AppiumDriver driver) {
@@ -135,6 +136,25 @@ public class TestUtility {
         basePage.homeMoreButton.click();
         waitForVisibility(basePage.logOutButton, driver);
         basePage.logOutButton.click();
+        waitForVisibility(basePage.logOutConfirm, driver);
+        basePage.logOutConfirm.click();
+        waitForVisibility(basePage.forgotPwd, driver);
+    }
+
+    public static void logOutUseriOS(BasePage basePage, AppiumDriver driver) {
+        basePage.homeMoreButton.click();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        waitForVisibility(basePage.logOutButton, driver);
+        while (!basePage.logOutButton.isDisplayed()) {
+            basePage.homeMoreButton.click();
+        }
+        if (basePage.logOutButton.isDisplayed()) {
+            basePage.logOutButton.click();
+        }
         waitForVisibility(basePage.logOutConfirm, driver);
         basePage.logOutConfirm.click();
         waitForVisibility(basePage.forgotPwd, driver);

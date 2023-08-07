@@ -100,7 +100,11 @@ public class SignInScreenTest extends BaseTest {
     public void logOutUser() {
         if (signInPage.homeMoreButton.isDisplayed()) {
             TestUtility.waitForVisibility(signInPage.homeMoreButton, getDriver());
-            TestUtility.logOutUser(signInPage, getDriver());
+            if (isAndroidPlatform()) {
+                TestUtility.logOutUser(signInPage, getDriver());
+            } else {
+                TestUtility.logOutUseriOS(signInPage, getDriver());
+            }
         }
     }
 }
