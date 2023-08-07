@@ -37,7 +37,7 @@ public abstract class BaseTest {
 
         Properties properties = new Properties();
 
-        isRunTestRailSuite = true;
+        isRunTestRailSuite = false;
 //        String strFile = "logs" + File.separator + platformName + "_" + deviceName;
 //        File logFile = new File(strFile);
 //        if (!logFile.exists()) {
