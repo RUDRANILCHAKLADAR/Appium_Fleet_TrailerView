@@ -79,7 +79,7 @@ public abstract class BaseTest {
                 option.setPlatformVersion(properties.getProperty(Constants.IOS_VERSION));
                 option.setWdaLaunchTimeout(Duration.ofSeconds(30));
                 //option.setApp(System.getProperty("user.dir") + "//App//Fleet Staging.app");
-                option.setApp(option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
+                option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
                 option.autoAcceptAlerts();
                 driver = new IOSDriver(url, option);
             }

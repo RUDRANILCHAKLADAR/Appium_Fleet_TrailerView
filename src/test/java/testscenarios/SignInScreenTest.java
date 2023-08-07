@@ -24,7 +24,7 @@ public class SignInScreenTest extends BaseTest {
     }
 
     @Test(priority = 1)
-    @TestRailId( tags = {"146958", "146962"})
+    @TestRailId( tags = {"146958", "146962", "147715", "147716"})
     public void testUiValidation(){
         assertTrue(signInPage.userNameEditText.isDisplayed());
         TestUtility.waitForVisibility(signInPage.userNameEditText, getDriver());
