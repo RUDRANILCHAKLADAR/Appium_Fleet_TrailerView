@@ -1,5 +1,6 @@
 package core.testrail;
 
+import core.Constants;
 import org.json.simple.JSONObject;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -84,10 +85,17 @@ public class TestRailAPI {
         return client;
     }
 
-    public void beforeTest(ITestContext ctx, Method testMethod) {
-        if(testMethod.isAnnotationPresent(TestRailId.class)) {
-            TestRailId ids = testMethod.getAnnotation(TestRailId.class);
-            ctx.setAttribute("testId", ids.tags());
+    public void beforeTest(ITestContext ctx, Method testMethod, Constants.Platform currentPlatform) {
+        String[] annotations = null;
+        if(currentPlatform.getPlatformName() == Constants.Platform.ANDROID.getPlatformName() && testMethod.isAnnotationPresent(TestRailIdAndroid.class)) {
+            TestRailIdAndroid ids = testMethod.getAnnotation(TestRailIdAndroid.class);
+           annotations = ids.androidTags();
+        } else if(currentPlatform.getPlatformName() == Constants.Platform.iOS.getPlatformName() && testMethod.isAnnotationPresent(TestRailIdIos.class)) {
+            TestRailIdIos ids = testMethod.getAnnotation(TestRailIdIos.class);
+            annotations = ids.iOSTags();
+        }
+        if(annotations != null) {
+            ctx.setAttribute("testId", annotations);
         }
     }
 
@@ -99,10 +107,10 @@ public class TestRailAPI {
         }
     }
 
-    public void createTestRunSuite(ITestContext ctx) throws IOException, APIException{
+    public void createTestRunSuite(ITestContext ctx, Constants.Platform currentPlatform) throws IOException, APIException{
         Map<String, Object> data = new HashMap<>();
         data.put("include_all", true);
-        data.put("name", "Appium Test Run " + System.currentTimeMillis());
+        data.put("name", "Appium Test Run " + currentPlatform);
         JSONObject jsonObject = (JSONObject) getTestRailAPIClient().sendPost("add_run/" + TEST_RAIL_PROJECT_ID, data);
         Long suiteId = (Long) jsonObject.get("id");
         ctx.setAttribute("suiteId", suiteId);

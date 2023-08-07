@@ -20,22 +20,24 @@ import java.util.Properties;
 
 public abstract class BaseTest {
 
-    private Constants.Platform currentPlatform = Constants.Platform.ANDROID;
+    private Constants.Platform currentPlatform = null;
 
     private AppiumDriver driver;
-    private TestRailAPI testRailAPI;
-    private boolean isRunTestRailSuite = true;
 
+    private static boolean isRunTestRailSuite = true;
+
+    private static TestRailAPI androidTestRailApi;
+    private static TestRailAPI iOSTestRailApi;
 
     @Parameters({"emulator", "platformName", "udid", "deviceName", "systemPort", "wdaLocalPort", "webkitDebugProxyPort"})
-    @BeforeClass
+    @BeforeTest
     public void setUp(@Optional("androidOnly") String emulator, @Optional String platformName, @Optional String udid, @Optional String deviceName,
                            @Optional("androidOnly") String systemPort,
-                           @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort) throws Exception {
+                           @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort, ITestContext ctx) throws Exception {
 
         Properties properties = new Properties();
-//        testRailAPI = new TestRailAPI();
-//        isRunTestRailSuite = false;
+
+        isRunTestRailSuite = false;
 //        String strFile = "logs" + File.separator + platformName + "_" + deviceName;
 //        File logFile = new File(strFile);
 //        if (!logFile.exists()) {
@@ -46,6 +48,9 @@ public abstract class BaseTest {
         properties.load(fis);
 
         URL url = new URL(properties.getProperty(Constants.APPIUM_URL));
+
+//        platformName = "android";
+        System.out.println("emulator = " + emulator + ", platformName = " + platformName);
 
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
@@ -77,13 +82,8 @@ public abstract class BaseTest {
                 option.setAutomationName(properties.getProperty(Constants.IOS_AUTOMATION_DRIVER));
                 option.setPlatformVersion(properties.getProperty(Constants.IOS_VERSION));
                 option.setWdaLaunchTimeout(Duration.ofSeconds(30));
-                if(System.getenv("BITRISE_APP_DIR_PATH")==null && System.getenv("BITRISE_SOURCE_DIR")==null){
-                    option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
-                }else if(System.getenv("BITRISE_APP_DIR_PATH")!=null) {
-                    option.setApp(System.getenv("BITRISE_APP_DIR_PATH"));
-                } else {
-                    option.setApp(System.getenv("BITRISE_SOURCE_DIR") + "/src/test/java/binaries/FleetLocate TrailerView Staging.app");
-                }
+                //option.setApp(System.getProperty("user.dir") + "//App//Fleet Staging.app");
+                option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
                 option.autoAcceptAlerts();
                 driver = new IOSDriver(url, option);
             }
@@ -91,7 +91,59 @@ public abstract class BaseTest {
         }
 
         init();
+        createTestRunSuite(ctx);
+        System.out.println("rupak before test - 1  " + currentPlatform + " ctx: "+ctx);
     }
+
+    /*@BeforeTest
+    public void testBefore() {
+        System.out.println("rupak before test " + currentPlatform);
+    }
+
+    @BeforeGroups
+    public void testBeforeGroups() {
+        System.out.println("rupak before groups "+  currentPlatform);
+    }
+
+    @AfterTest
+    public void testAfterTest() {
+        System.out.println("rupak after test "+  currentPlatform);
+    }
+
+    @AfterMethod
+    public void testAfterMethod() {
+        System.out.println("rupak after method "+  currentPlatform);
+    }
+
+    @AfterClass
+    public void testAfterClass() {
+        System.out.println("rupak after class "+  currentPlatform);
+    }
+
+    @AfterSuite
+    public void testAfterSuite() {
+        System.out.println("rupak after suite "+  currentPlatform);
+    }
+
+    @AfterGroups
+    public void testAfterGroup() {
+        System.out.println("rupak after group "+  currentPlatform);
+    }
+
+    @BeforeMethod
+    public void testBeforeMethods() {
+        System.out.println("rupak before methods " + currentPlatform);
+    }
+
+    @BeforeSuite
+    public void testBeforeSuite() {
+        System.out.println("rupak before suite " + currentPlatform);
+    }
+
+    @Parameterized.BeforeParam
+    public void testBeforepaam() {
+        System.out.println("rupak before param " + currentPlatform);
+    }*/
 
     protected  void init(){};
     protected  void deInit(){};
@@ -119,15 +171,12 @@ public abstract class BaseTest {
                 basePage.locationPermission.click();
             }
         } else {
-            TestUtility.waitForVisibility(basePage.iOSLocationPermissionAlert, driver);
-            if (TestUtility.isElementPresent(basePage.locationPermission)) {
-                basePage.locationPermission.click();
-            }
+            // todo handle by iOS
         }
     }
 
 
-    @AfterClass(alwaysRun = true)
+    @AfterTest(alwaysRun = true)
     public void tearDown() {
         deInit();
         if(driver != null) {
@@ -135,25 +184,37 @@ public abstract class BaseTest {
         }
     }
 
-//    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void beforeTest(ITestContext ctx, Method testMethod) {
         if(isRunTestRailSuite) {
-            testRailAPI.beforeTest(ctx, testMethod);
+            getTestRailApi().beforeTest(ctx, testMethod, currentPlatform);
         }
     }
 
-//    @AfterMethod (alwaysRun = true)
-    public void afterTest(ITestResult testResult, ITestContext
+    @AfterMethod (alwaysRun = true)
+    public void afterTestMethod(ITestResult testResult, ITestContext
             context, Method testMethod) {
         if(isRunTestRailSuite) {
-            testRailAPI.afterTest(context, testResult, testMethod);
+            getTestRailApi().afterTest(context, testResult, testMethod);
         }
     }
 
-//    @BeforeSuite
+    private TestRailAPI getTestRailApi() {
+        if(isAndroidPlatform()) return androidTestRailApi;
+        else return iOSTestRailApi;
+    }
+
+    //    @BeforeTest
     public void createTestRunSuite(ITestContext ctx) throws APIException, IOException {
+        System.out.println("this = currentPlatform:" + currentPlatform);
         if(isRunTestRailSuite) {
-            testRailAPI.createTestRunSuite(ctx);
+            if(isAndroidPlatform()) {
+                androidTestRailApi = new TestRailAPI();
+                androidTestRailApi.createTestRunSuite(ctx, currentPlatform);
+            } else if(isIosPlatform()) {
+                iOSTestRailApi = new TestRailAPI();
+                iOSTestRailApi.createTestRunSuite(ctx, currentPlatform);
+            }
         }
     }
 
