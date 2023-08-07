@@ -15,16 +15,16 @@
 
     </classes>
 </test>
-<!--    <test name="iPhone14">-->
+    <test name="iPhone14">
 
-<!--        <parameter name="platformName" value="iOS" />-->
-<!--        <parameter name="udid" value="63E2D54C-CA63-4ECA-89C2-61F2F41EE2F7" />-->
-<!--        <parameter name="deviceName" value="iPhone 14" />-->
-<!--        <parameter name="wdaLocalPort" value="10001" />-->
-<!--        <parameter name="webkitDebugProxyPort" value="11001" />-->
-<!--        <classes>-->
-<!--            <class name="AppiumAutomation.TripsTestCase"/>-->
+        <parameter name="platformName" value="iOS" />
+        <parameter name="udid" value="63E2D54C-CA63-4ECA-89C2-61F2F41EE2F7" />
+        <parameter name="deviceName" value="iPhone 14" />
+        <parameter name="wdaLocalPort" value="10001" />
+        <parameter name="webkitDebugProxyPort" value="11001" />
+        <classes>
+            <class name="testscenarios.SignInScreenTest"/>
 
-<!--        </classes>-->
-<!--    </test>-->
+        </classes>
+    </test>
 </suite>

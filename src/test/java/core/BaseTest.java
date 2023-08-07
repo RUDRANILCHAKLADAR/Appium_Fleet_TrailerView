@@ -47,7 +47,7 @@ public abstract class BaseTest {
 
         URL url = new URL(properties.getProperty(Constants.APPIUM_URL));
 
-        platformName = "android";
+//        platformName = "android";
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
                 currentPlatform = Constants.Platform.ANDROID;
@@ -79,7 +79,7 @@ public abstract class BaseTest {
                 option.setPlatformVersion(properties.getProperty(Constants.IOS_VERSION));
                 option.setWdaLaunchTimeout(Duration.ofSeconds(30));
                 //option.setApp(System.getProperty("user.dir") + "//App//Fleet Staging.app");
-                option.setApp(properties.getProperty(Constants.IOS_APP_PATH));
+                option.setApp(option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
                 option.autoAcceptAlerts();
                 driver = new IOSDriver(url, option);
             }
