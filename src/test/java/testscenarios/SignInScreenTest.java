@@ -96,20 +96,20 @@ public class SignInScreenTest extends BaseTest {
     @Test(priority = 3)
     public void testLogInFlowSuccess() {
 
-        TestUtility.logInUser(signInPage, "tv_rs_27", "Spireon@1234");
+        TestUtility.logInUser(signInPage, "atistagetest", "Password1");
         disMissLocationPermission(signInPage);
         TestUtility.waitForVisibility(signInPage.assetListScreenTitle, getDriver());
     }
 
     @AfterClass
     public void logOutUser() {
-        if (signInPage.homeMoreButton.isDisplayed()) {
-            TestUtility.waitForVisibility(signInPage.homeMoreButton, getDriver());
-            if (isAndroidPlatform()) {
+        if (isAndroidPlatform()) {
+            if (signInPage.homeMoreButton.isDisplayed()) {
+                TestUtility.waitForVisibility(signInPage.homeMoreButton, getDriver());
                 TestUtility.logOutUser(signInPage, getDriver());
-            } else {
-//                TestUtility.logOutUseriOS(signInPage, getDriver());
             }
+        } else {
+//                TestUtility.logOutUseriOS(signInPage, getDriver());
         }
     }
 }
