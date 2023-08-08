@@ -24,7 +24,7 @@ public abstract class BaseTest {
 
     private AppiumDriver driver;
 
-    private static boolean isRunTestRailSuite = true;
+    private static boolean isRunTestRailSuite = false;
 
     private static TestRailAPI androidTestRailApi;
     private static TestRailAPI iOSTestRailApi;
@@ -37,7 +37,6 @@ public abstract class BaseTest {
 
         Properties properties = new Properties();
 
-        isRunTestRailSuite = false;
 //        String strFile = "logs" + File.separator + platformName + "_" + deviceName;
 //        File logFile = new File(strFile);
 //        if (!logFile.exists()) {
@@ -92,7 +91,7 @@ public abstract class BaseTest {
     }
     @Parameters({"platformName"})
     @BeforeTest
-    public void beforeClass(@Optional String platformName, ITestContext ctx) throws Exception {
+    public void beforeTest(@Optional String platformName, ITestContext ctx) throws Exception {
 //        platformName = "iOS";
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
@@ -216,7 +215,6 @@ public abstract class BaseTest {
 
     //    @BeforeTest
     public void createTestRunSuite(ITestContext ctx) throws APIException, IOException {
-        System.out.println("this = currentPlatform:" + currentPlatform);
         if(isRunTestRailSuite) {
             if(isAndroidPlatform()) {
                 androidTestRailApi = new TestRailAPI();
