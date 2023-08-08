@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="iOS" verbose="10" preserve-order="true" parallel="tests">
+    <test name="iOS" parallel="false" thread-count="1">
+        <parameter name="platformName" value="iOS"/>
+        <parameter name="udid" value="63E2D54C-CA63-4ECA-89C2-61F2F41EE2F7"/>
+        <parameter name="deviceName" value="iPhone 14"/>
+        <parameter name="wdaLocalPort" value="10001"/>
+        <parameter name="webkitDebugProxyPort" value="11001"/>
+        <classes>
+            <class name="testscenarios.SignInScreenTest"/>
+            <class name="testscenarios.ForgotPasswordScreenTest"/>
+        </classes>
+    </test>
+</suite>
