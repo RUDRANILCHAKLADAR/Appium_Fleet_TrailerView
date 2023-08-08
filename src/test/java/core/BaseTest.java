@@ -30,10 +30,10 @@ public abstract class BaseTest {
     private static TestRailAPI iOSTestRailApi;
 
     @Parameters({"emulator", "platformName", "udid", "deviceName", "systemPort", "wdaLocalPort", "webkitDebugProxyPort"})
-    @BeforeTest
+    @BeforeClass
     public void setUp(@Optional("androidOnly") String emulator, @Optional String platformName, @Optional String udid, @Optional String deviceName,
                            @Optional("androidOnly") String systemPort,
-                           @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort, ITestContext ctx) throws Exception {
+                           @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort) throws Exception {
 
         Properties properties = new Properties();
 
@@ -49,8 +49,7 @@ public abstract class BaseTest {
 
         URL url = new URL(properties.getProperty(Constants.APPIUM_URL));
 
-//        platformName = "android";
-        System.out.println("emulator = " + emulator + ", platformName = " + platformName);
+//        platformName = "iOS";
 
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
@@ -89,10 +88,21 @@ public abstract class BaseTest {
             }
             default -> throw new Exception("Invalid platform! - " + platformName);
         }
-
         init();
+    }
+    @Parameters({"platformName"})
+    @BeforeTest
+    public void beforeClass(@Optional String platformName, ITestContext ctx) throws Exception {
+//        platformName = "iOS";
+        switch (Constants.Platform.getPlatformFromName(platformName)) {
+            case ANDROID -> {
+                currentPlatform = Constants.Platform.ANDROID;
+            }
+            case iOS -> {
+                currentPlatform = Constants.Platform.iOS;
+            }
+        }
         createTestRunSuite(ctx);
-        System.out.println("rupak before test - 1  " + currentPlatform + " ctx: "+ctx);
     }
 
     /*@BeforeTest
@@ -176,7 +186,7 @@ public abstract class BaseTest {
     }
 
 
-    @AfterTest(alwaysRun = true)
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
         deInit();
         if(driver != null) {

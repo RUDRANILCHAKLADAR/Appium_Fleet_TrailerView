@@ -31,8 +31,8 @@ public class ForgotPasswordPage extends BasePage {
     @AndroidFindBy(xpath = ".//android.view.View[@index='4']")
     public WebElement requestAccessCodeButton;
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc=\"back\"]")
-    public WebElement backButton;
+    @AndroidFindBy(accessibility = "navBack")
+    public WebElement forgotPasswordBackButton;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Error']")
     public WebElement errorTitle;
@@ -60,7 +60,7 @@ public class ForgotPasswordPage extends BasePage {
     @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Username']")
     public WebElement recoverCredentialUserName;
 
-    @AndroidFindBy(id = "userNameEditText")
+    @AndroidFindBy(accessibility = "userNameEditText")
     public WebElement recoverCredentialUserNameEditText;
 
     @AndroidFindBy(id = "accessCodeEditText")
@@ -106,7 +106,7 @@ public class ForgotPasswordPage extends BasePage {
     public WebElement recoverCredentialResetPwdBtn;
 
 
-    @AndroidFindBy(accessibility = "back")
+    @AndroidFindBy(id = "backButton")
     public WebElement recoverCredentialBackBtn;
 
 

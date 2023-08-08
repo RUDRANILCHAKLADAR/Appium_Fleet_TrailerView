@@ -11,7 +11,7 @@
         <parameter name="chromeDriverPort" value="11000"/>
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
-            <!--<class name="testscenarios.ForgotPasswordScreenTest"/>-->
+            <class name="testscenarios.ForgotPasswordScreenTest"/>
 
         </classes>
     </test>

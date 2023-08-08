@@ -5,7 +5,6 @@ import core.TestUtility;
 import objects.ForgotPasswordPage;
 import objects.SignInPage;
 import org.openqa.selenium.By;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -80,7 +79,7 @@ public class ForgotPasswordScreenTest extends BaseTest {
     public void testForgotPasswordFlowSuccess() {
 
         forgotPasswordPage.userNameEditText.clear();
-        forgotPasswordPage.userNameEditText.sendKeys("tv_rs_25");
+        forgotPasswordPage.userNameEditText.sendKeys("tv_rs_23");
 
         forgotPasswordPage.requestAccessCodeButton.click();
 
@@ -122,8 +121,8 @@ public class ForgotPasswordScreenTest extends BaseTest {
     }
 
     private void redirectLoginScreen() {
-        forgotPasswordPage.backButton.click();
         forgotPasswordPage.recoverCredentialBackBtn.click();
+        forgotPasswordPage.forgotPasswordBackButton.click();
     }
 
 }
