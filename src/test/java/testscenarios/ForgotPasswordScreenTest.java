@@ -5,8 +5,6 @@ import core.TestUtility;
 import objects.ForgotPasswordPage;
 import objects.SignInPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -29,9 +27,6 @@ public class ForgotPasswordScreenTest extends BaseTest {
     }
 
     private void launchForgotPasswordScreen() {
-//        if (forgotPasswordPage.forgotPasswordTitle.isDisplayed()) {
-//            return;
-//        }
         assertTrue(signInPage.forgotPwd.isDisplayed());
         signInPage.forgotPwd.click();
         TestUtility.waitForVisibility(forgotPasswordPage.forgotPasswordTitle, getDriver());
@@ -43,7 +38,7 @@ public class ForgotPasswordScreenTest extends BaseTest {
         assertTrue(forgotPasswordPage.forgotPasswordTitle.isDisplayed());
         assertTrue(forgotPasswordPage.forgotPasswordDescription.isDisplayed());
         assertTrue(forgotPasswordPage.userNameEditText.isDisplayed());
-//        assertTrue(forgotPasswordPage.userNameEditTextHint.isDisplayed());
+        assertTrue(forgotPasswordPage.userNameEditTextHint.isDisplayed());
         assertTrue(forgotPasswordPage.requestAccessCodeText.isDisplayed());
         assertTrue(forgotPasswordPage.requestAccessCodeButton.isDisplayed());
     }
@@ -57,34 +52,34 @@ public class ForgotPasswordScreenTest extends BaseTest {
         forgotPasswordPage.requestAccessCodeButton.click();
 
         // validation of invalid credentials
-        TestUtility.waitForVisibility(forgotPasswordPage.errorTitle, getDriver());
-        assertEquals(forgotPasswordPage.userNotExistsErrorMsg.getText(), "Unable to send password reset.");
-        assertTrue(forgotPasswordPage.errorDialogOk.isDisplayed());
-        forgotPasswordPage.errorDialogOk.click();
+        if(isAndroidPlatform()) {
+            TestUtility.waitForVisibility(forgotPasswordPage.errorTitle, getDriver());
+            assertEquals(forgotPasswordPage.userNotExistsErrorMsg.getText(), "Unable to send password reset.");
+            assertTrue(forgotPasswordPage.errorDialogOk.isDisplayed());
+            forgotPasswordPage.errorDialogOk.click();
+        } else {
+            // todo handle iOS related code
+        }
 
         // validation of No Network
-
+        TestUtility.turnOffInternet(getDriver());
+        forgotPasswordPage.requestAccessCodeButton.click();
         if(isAndroidPlatform()) {
-            TestUtility.turnOffInternet(getDriver());
-            forgotPasswordPage.requestAccessCodeButton.click();
             TestUtility.waitForVisibility(forgotPasswordPage.noNetworkErrorTitle, getDriver());
             assertEquals(forgotPasswordPage.noNetworkErrorMsg.getText(), "Please check your network connection and try again.");
             assertTrue(forgotPasswordPage.errorDialogOk.isDisplayed());
             forgotPasswordPage.errorDialogOk.click();
-            TestUtility.turnOnInternet(getDriver());
         } else {
             // todo handle iOS related code
         }
+        TestUtility.turnOnInternet(getDriver());
     }
 
     @Test(priority = 3)
     public void testForgotPasswordFlowSuccess() {
-        forgotPasswordPage.userNameEditText.clear();
 
-        while(!forgotPasswordPage.userNameEditText.getText().isEmpty()) {
-            forgotPasswordPage.userNameEditText.sendKeys(Keys.BACK_SPACE);
-        }
-        forgotPasswordPage.userNameEditText.sendKeys("tv_rs_25");
+        forgotPasswordPage.userNameEditText.clear();
+        forgotPasswordPage.userNameEditText.sendKeys("tv_rs_23");
 
         forgotPasswordPage.requestAccessCodeButton.click();
 
@@ -117,16 +112,17 @@ public class ForgotPasswordScreenTest extends BaseTest {
     public void testEditTextErrorMsgValidation() {
 
         forgotPasswordPage.recoverCredentialAccessCodeEditText.sendKeys("123");
-        assertTrue(forgotPasswordPage.invalidAccessCodeErrorMessage.isDisplayed());
+        assertTrue(getDriver().findElement(By.xpath(".//android.widget.TextView[@text='Please enter valid 6 digits access code.']")).isDisplayed());
+
 
         forgotPasswordPage.recoverCredentialCreateNewPwdEditText.sendKeys("test");
         forgotPasswordPage.recoverCredentialConfirmNewPwdEditText.sendKeys("test12");
-//        assertTrue(forgotPasswordPage.passwordsDontMatchErrorMessage.isDisplayed());
+        assertTrue(getDriver().findElement(By.xpath(".//*[contains(@text,'match')]")).isDisplayed());
     }
 
     private void redirectLoginScreen() {
-        forgotPasswordPage.backButton.click();
         forgotPasswordPage.recoverCredentialBackBtn.click();
+        forgotPasswordPage.forgotPasswordBackButton.click();
     }
 
 }

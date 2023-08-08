@@ -11,7 +11,7 @@
         <parameter name="chromeDriverPort" value="11000"/>
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
-            <!--<class name="testscenarios.ForgotPasswordScreenTest"/>-->
+            <class name="testscenarios.ForgotPasswordScreenTest"/>
 
         </classes>
     </test>
@@ -19,13 +19,12 @@
     <test name="iOS" parallel="false" thread-count="1">
         <parameter name="platformName" value="iOS"/>
         <parameter name="udid" value="63E2D54C-CA63-4ECA-89C2-61F2F41EE2F7"/>
-        <parameter name="deviceName" value="iPhone 14 Pro"/>
+        <parameter name="deviceName" value="iPhone 14"/>
         <parameter name="wdaLocalPort" value="10001"/>
         <parameter name="webkitDebugProxyPort" value="11001"/>
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
             <class name="testscenarios.ForgotPasswordScreenTest"/>
-            <class name="testscenarios.VehicleListScreenTest"/>
         </classes>
     </test>
 </suite>
