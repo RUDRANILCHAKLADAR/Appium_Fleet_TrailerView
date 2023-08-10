@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="/Users/RSamant/Documents/spireon_android/Trailerview_Appium">
+        <classes>
+            <class name="testscenarios.ForgotPasswordScreenTest">
+                <methods>
+                    <include name="testUiValidation"/>
+                    <include name="testLoginErrorValidation"/>
+                    <include name="testForgotPasswordFlowSuccess"/>
+                    <include name="testRecoverCredentialsScreenUi"/>
+                    <include name="testEditTextErrorMsgValidation"/>
+                </methods>
+            </class>
+            <class name="testscenarios.SignInScreenTest">
+                <methods>
+                    <include name="RailIdIos"/>
+                    <include name="testLoginErrorValidation"/>
+                    <include name="testLogInFlowSuccess"/>
+                </methods>
+            </class>
+            <class name="testscenarios.VehicleListScreenTest">
+                <methods>
+                    <include name="testValidateAssetListUi"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

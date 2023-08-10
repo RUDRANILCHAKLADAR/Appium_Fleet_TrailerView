@@ -48,8 +48,6 @@ public abstract class BaseTest {
 
         URL url = new URL(properties.getProperty(Constants.APPIUM_URL));
 
-//        platformName = "iOS";
-
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
                 currentPlatform = Constants.Platform.ANDROID;
@@ -92,7 +90,6 @@ public abstract class BaseTest {
     @Parameters({"platformName"})
     @BeforeTest
     public void beforeTest(@Optional String platformName, ITestContext ctx) throws Exception {
-//        platformName = "iOS";
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
                 currentPlatform = Constants.Platform.ANDROID;

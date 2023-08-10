@@ -8,6 +8,7 @@
         <parameter name="deviceName" value="emulator-5554"/>
         <parameter name="systemPort" value="10000"/>
         <parameter name="chromeDriverPort" value="11000"/>
+        <parameter name="env" value="stage"/>
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
             <class name="testscenarios.ForgotPasswordScreenTest"/>
