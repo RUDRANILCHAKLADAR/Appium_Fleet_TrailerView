@@ -40,10 +40,10 @@ public class SignInScreenTest extends BaseTest {
         signInPage.pwdEye.click();
         assertTrue(signInPage.logInButton.isDisplayed());
 
-        HashMap<String, String> headers = new HashMap<String, String>();
+        /*HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("X-Nspire-AppToken", "f07740dc-1252-48f3-9165-c5263bbf373c");
         UserToken userToken = IdentityService.getUserToken(headers,"tv_rs_admin", "Password@1", envProperties.getIdentityBaseUrl());
-        System.out.println("userToken: " + userToken);
+        System.out.println("userToken: " + userToken);*/
     }
 
     @Test(priority = 2)
