@@ -17,7 +17,7 @@ public class ForgotPasswordScreenTest extends BaseTest {
     private SignInPage signInPage;
 
     @Override
-    protected void init() {
+    protected void init(ITestContext context) {
         signInPage = new SignInPage(getDriver());
         forgotPasswordPage = new ForgotPasswordPage(getDriver());
     }

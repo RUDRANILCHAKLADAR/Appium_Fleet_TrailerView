@@ -21,7 +21,7 @@ public class IdentityService {
             .header("Content-Type", "application/json")
             .body("{\n    \"authProviderCode\":\"nspire\",\n    \"targetAuthProviderCode\": \"ati-cognito\",\n    \"migrateByDate\": \"2024-07-21T12:00:00.947Z\"\n}")
             .asString();*/
-    public static UserToken getUserToken(Map<String, String> headers, String username, String password, String identityBaseUrl) {
+    public static UserToken getUserToken(String identityBaseUrl, Map<String, String> headers, String username, String password) {
         /**
          * HashMap<String, String> headers = new HashMap<String, String>();
          * headers.put("X-Nspire-AppToken", "f07740dc-1252-48f3-9165-c5263bbf373c")

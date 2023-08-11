@@ -18,4 +18,8 @@ public class EnvProperties {
         return (String) ((JSONObject)testContext.getAttribute(Constants.ENVIRONMENT_CONFIG)).get("identityServiceBaseUrl");
     }
 
+    public String getAtiAvsBaseUrl() {
+        return (String) ((JSONObject)testContext.getAttribute(Constants.ENVIRONMENT_CONFIG)).get("atiAvsServiceBaseUrl");
+    }
+
 }

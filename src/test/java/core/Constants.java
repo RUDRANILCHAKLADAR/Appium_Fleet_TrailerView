@@ -2,6 +2,7 @@ package core;
 
 public class Constants {
 
+    public static final String USER_TOKEN = "userToken";
     public static String APPIUM_URL = "appiumURL";
     public static String ANDROID_DEVICE_NAME = "AndroidDeviceName";
     public static String ANDROID_PLATFORM_NAME = "android";

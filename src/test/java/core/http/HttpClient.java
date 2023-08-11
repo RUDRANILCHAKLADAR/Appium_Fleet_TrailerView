@@ -53,7 +53,7 @@ public class HttpClient implements AutoCloseable {
             }
         });
     }
-
+//18605000707 -
     public <T> Response<T> get(String url, Class<T> clazz) throws HttpClientException {
         return get(url, null, null, null, clazz);
     }

@@ -5,6 +5,7 @@ import core.TestUtility;
 import core.testrail.TestRailIdAndroid;
 import core.testrail.TestRailIdIos;
 import objects.SignInPage;
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import utils.model.UserToken;
 import utils.nspireservice.IdentityService;
@@ -18,7 +19,7 @@ public class SignInScreenTest extends BaseTest {
     private SignInPage signInPage;
 
     @Override
-    protected void init() {
+    protected void init(ITestContext context) {
         signInPage = new SignInPage(getDriver());
     }
 

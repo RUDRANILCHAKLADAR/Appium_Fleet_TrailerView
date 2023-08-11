@@ -38,7 +38,7 @@ public abstract class BaseTest {
     @BeforeClass
     public void setUp(@Optional("androidOnly") String emulator, @Optional String platformName, @Optional String udid, @Optional String deviceName,
                            @Optional("androidOnly") String systemPort,
-                           @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort) throws Exception {
+                           @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort, ITestContext context) throws Exception {
 
         Properties properties = new Properties();
 
@@ -90,7 +90,7 @@ public abstract class BaseTest {
             }
             default -> throw new Exception("Invalid platform! - " + platformName);
         }
-        init();
+        init(context);
     }
     @Parameters({"platformName"})
     @BeforeTest
@@ -156,7 +156,7 @@ public abstract class BaseTest {
         System.out.println("rupak before param " + currentPlatform);
     }*/
 
-    protected abstract void init();
+    protected abstract void init(ITestContext context);
 
     protected abstract void deInit();
 
