@@ -9,6 +9,7 @@
         <parameter name="deviceName" value="emulator-5554"/>
         <parameter name="systemPort" value="10000"/>
         <parameter name="chromeDriverPort" value="11000"/>
+        <parameter name="environment" value="stage"/>
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
             <class name="testscenarios.ForgotPasswordScreenTest"/>
@@ -22,6 +23,7 @@
         <parameter name="deviceName" value="iPhone 14"/>
         <parameter name="wdaLocalPort" value="10001"/>
         <parameter name="webkitDebugProxyPort" value="11001"/>
+        <parameter name="environment" value="stage"/>
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
             <class name="testscenarios.ForgotPasswordScreenTest"/>

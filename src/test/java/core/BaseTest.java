@@ -7,10 +7,13 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.testng.*;
 import org.testng.annotations.*;
 
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -220,6 +223,21 @@ public abstract class BaseTest {
                 iOSTestRailApi = new TestRailAPI();
                 iOSTestRailApi.createTestRunSuite(ctx, currentPlatform);
             }
+        }
+    }
+
+    @Parameters("environment")
+    @BeforeTest
+    public void beforeTest(ITestContext ctx, String environment) {
+        try {
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(new FileReader(System.getProperty("user.dir") + Constants.ENVIRONMENT_CONFIG_PATH));
+
+            JSONObject jsonObject =  (JSONObject) obj;
+            ctx.setAttribute(Constants.ENVIRONMENT_CONFIG, jsonObject.get(environment));
+            ctx.setAttribute(Constants.ENVIRONMENT_NAME, environment);
+        } catch (Exception exception) {
+            System.out.println("error reading config file --: "+exception);
         }
     }
 

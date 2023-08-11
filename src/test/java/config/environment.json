@@ -1,0 +1,11 @@
+{
+  "stage": {
+    "platformBaseUrl": "https://platformapi-stage.spireon.com/v0/rest",
+    "identityServiceBaseUrl": "https://identity-stage.spireon.com/identity"
+  },
+  "prod": {
+    "platformBaseUrl": "https://platformapi.spireon.com/v0/rest",
+    "identityServiceBaseUrl": "https://identity.spireon.com/identity"
+  }
+
+}
