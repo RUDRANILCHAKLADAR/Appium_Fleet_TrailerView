@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" verbose="10" preserve-order="true" parallel="tests">
-
+    <parameter name="environment" value="stage"/>
     <test name="Android" parallel="false" thread-count="1">
         <parameter name="emulator" value="true"/>
         <parameter name="platformName" value="android"/>
@@ -9,7 +9,6 @@
         <parameter name="deviceName" value="emulator-5554"/>
         <parameter name="systemPort" value="10000"/>
         <parameter name="chromeDriverPort" value="11000"/>
-        <parameter name="environment" value="stage"/>
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
             <class name="testscenarios.ForgotPasswordScreenTest"/>
@@ -23,7 +22,6 @@
         <parameter name="deviceName" value="iPhone 14"/>
         <parameter name="wdaLocalPort" value="10001"/>
         <parameter name="webkitDebugProxyPort" value="11001"/>
-        <parameter name="environment" value="stage"/>
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
             <class name="testscenarios.ForgotPasswordScreenTest"/>

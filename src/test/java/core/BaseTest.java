@@ -32,6 +32,8 @@ public abstract class BaseTest {
     private static TestRailAPI androidTestRailApi;
     private static TestRailAPI iOSTestRailApi;
 
+    public EnvProperties envProperties;
+
     @Parameters({"emulator", "platformName", "udid", "deviceName", "systemPort", "wdaLocalPort", "webkitDebugProxyPort"})
     @BeforeClass
     public void setUp(@Optional("androidOnly") String emulator, @Optional String platformName, @Optional String udid, @Optional String deviceName,
@@ -154,8 +156,9 @@ public abstract class BaseTest {
         System.out.println("rupak before param " + currentPlatform);
     }*/
 
-    protected  void init(){};
-    protected  void deInit(){};
+    protected abstract void init();
+
+    protected abstract void deInit();
 
     public Constants.Platform getCurrentPlatform() {
         return currentPlatform;
@@ -227,8 +230,8 @@ public abstract class BaseTest {
     }
 
     @Parameters("environment")
-    @BeforeTest
-    public void beforeTest(ITestContext ctx, String environment) {
+    @BeforeSuite
+    public void beforeSuite(ITestContext ctx, String environment) {
         try {
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(new FileReader(System.getProperty("user.dir") + Constants.ENVIRONMENT_CONFIG_PATH));
@@ -236,6 +239,7 @@ public abstract class BaseTest {
             JSONObject jsonObject =  (JSONObject) obj;
             ctx.setAttribute(Constants.ENVIRONMENT_CONFIG, jsonObject.get(environment));
             ctx.setAttribute(Constants.ENVIRONMENT_NAME, environment);
+            envProperties = new EnvProperties(ctx);
         } catch (Exception exception) {
             System.out.println("error reading config file --: "+exception);
         }

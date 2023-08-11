@@ -20,6 +20,7 @@ import static org.testng.Assert.assertTrue;
 public class VehicleListScreenTest extends BaseTest {
 
     private VehicleListPage vehicleListPage;
+
     @Override
     protected void init() {
         vehicleListPage = new VehicleListPage(getDriver());

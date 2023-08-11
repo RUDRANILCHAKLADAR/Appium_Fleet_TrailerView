@@ -8,7 +8,6 @@ import utils.model.UserToken;
 import java.util.Map;
 
 public class IdentityService {
-    private static final String IDENTITY_SERVICE_BASE_URL = "https://identity-stage.spireon.com/identity/";
 
     /*Unirest.setTimeouts(0, 0);
     HttpResponse<String> response = Unirest.get("https://identity-stage.spireon.com/identity/token")
@@ -22,18 +21,20 @@ public class IdentityService {
             .header("Content-Type", "application/json")
             .body("{\n    \"authProviderCode\":\"nspire\",\n    \"targetAuthProviderCode\": \"ati-cognito\",\n    \"migrateByDate\": \"2024-07-21T12:00:00.947Z\"\n}")
             .asString();*/
-    public static UserToken getUserToken(Map<String, String> headers, String username, String password) {
+    public static UserToken getUserToken(Map<String, String> headers, String username, String password, String identityBaseUrl) {
         /**
          * HashMap<String, String> headers = new HashMap<String, String>();
          * headers.put("X-Nspire-AppToken", "f07740dc-1252-48f3-9165-c5263bbf373c")
          */
         try {
             Unirest.setTimeouts(60000L, 60000L);
-            String finalUrl = IDENTITY_SERVICE_BASE_URL + "token";
+            String finalUrl = identityBaseUrl + "/token";
+            System.out.println("identity service http url : "+finalUrl);
             headers.put("Authorization", "Basic " + Base64Coder.encodeString(username + ":" + password));
             HttpClient client = new HttpClient();
             return client.get(finalUrl, null, null, headers, UserToken.class).getParsedObject();
         }catch (Exception e){
+            System.out.println("identity service error : "+e.getLocalizedMessage());
             return null;
         }
     }
