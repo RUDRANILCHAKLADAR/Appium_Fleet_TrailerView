@@ -1,5 +1,7 @@
 package core;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import core.testrail.APIException;
 import core.testrail.TestRailAPI;
 import io.appium.java_client.AppiumDriver;
@@ -11,13 +13,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.testng.*;
 import org.testng.annotations.*;
+import utils.Utils;
 
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Properties;
 
 
@@ -25,7 +30,8 @@ public abstract class BaseTest {
 
     private Constants.Platform currentPlatform = null;
 
-    private AppiumDriver driver;
+    protected static ThreadLocal <AppiumDriver> driver = new ThreadLocal<AppiumDriver>();
+    protected static ThreadLocal <HashMap<String, String>> strings = new ThreadLocal<HashMap<String, String>>();
 
     private static boolean isRunTestRailSuite = false;
 
@@ -52,7 +58,7 @@ public abstract class BaseTest {
         properties.load(fis);
 
         URL url = new URL(properties.getProperty(Constants.APPIUM_URL));
-
+        AppiumDriver driver;
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
                 currentPlatform = Constants.Platform.ANDROID;
@@ -90,8 +96,18 @@ public abstract class BaseTest {
             }
             default -> throw new Exception("Invalid platform! - " + platformName);
         }
+        setDriver(driver);
         init(context);
     }
+
+    public AppiumDriver getDriver() {
+        return driver.get();
+    }
+
+    public void setDriver(AppiumDriver driver2) {
+        driver.set(driver2);
+    }
+
     @Parameters({"platformName"})
     @BeforeTest
     public void beforeTest(@Optional String platformName, ITestContext ctx) throws Exception {
@@ -104,6 +120,11 @@ public abstract class BaseTest {
             }
         }
         createTestRunSuite(ctx);
+
+        String xmlFileName = "strings/strings.xml";
+
+        InputStream stringsis = getClass().getClassLoader().getResourceAsStream(xmlFileName);
+        setStrings(Utils.parseStringXML(stringsis));
     }
 
     /*@BeforeTest
@@ -164,10 +185,6 @@ public abstract class BaseTest {
         return currentPlatform;
     }
 
-    public AppiumDriver getDriver() {
-        return driver;
-    }
-
     public boolean isAndroidPlatform() {
         return currentPlatform == Constants.Platform.ANDROID;
     }
@@ -178,7 +195,7 @@ public abstract class BaseTest {
 
     public void disMissLocationPermission(BasePage basePage) {
         if(isAndroidPlatform()) {
-            TestUtility.waitForVisibility(basePage.locationPermission, driver);
+            TestUtility.waitForVisibility(basePage.locationPermission, getDriver());
             if (TestUtility.isElementPresent(basePage.locationPermission)) {
                 basePage.locationPermission.click();
             }
@@ -191,8 +208,8 @@ public abstract class BaseTest {
     @AfterClass(alwaysRun = true)
     public void tearDown() {
         deInit();
-        if(driver != null) {
-            driver.quit();
+        if(getDriver() != null) {
+            getDriver().quit();
         }
     }
 
@@ -243,6 +260,14 @@ public abstract class BaseTest {
         } catch (Exception exception) {
             System.out.println("error reading config file --: "+exception);
         }
+    }
+
+    public HashMap<String, String> getStrings() {
+        return strings.get();
+    }
+
+    public void setStrings(HashMap<String, String> strings2) {
+        strings.set(strings2);
     }
 
 }

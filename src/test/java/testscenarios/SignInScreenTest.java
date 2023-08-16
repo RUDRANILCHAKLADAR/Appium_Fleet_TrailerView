@@ -7,10 +7,6 @@ import core.testrail.TestRailIdIos;
 import objects.SignInPage;
 import org.testng.ITestContext;
 import org.testng.annotations.Test;
-import utils.model.UserToken;
-import utils.nspireservice.IdentityService;
-
-import java.util.HashMap;
 
 import static org.testng.Assert.*;
 
@@ -40,6 +36,10 @@ public class SignInScreenTest extends BaseTest {
         assertTrue(signInPage.pwdEye.isDisplayed());
         signInPage.pwdEye.click();
         assertTrue(signInPage.logInButton.isDisplayed());
+
+//        String expectedErrTxt = getStrings().get("err_invalid_username_or_password");
+
+//        System.out.println("expectedErrTxt: "+expectedErrTxt);
 
         /*HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("X-Nspire-AppToken", "f07740dc-1252-48f3-9165-c5263bbf373c");
