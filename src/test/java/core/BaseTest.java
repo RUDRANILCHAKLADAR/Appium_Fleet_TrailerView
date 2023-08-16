@@ -135,52 +135,6 @@ public abstract class BaseTest {
         setStrings(Utils.parseStringXML(stringsis));
     }
 
-
-    public void startVideo() {
-        if (shouldCaptureVideo) {
-            System.out.println("Video recording started...");
-//            ((CanRecordScreen)driver.startRecordingScreen();
-            ((CanRecordScreen)getDriver()).startRecordingScreen();
-        }
-    }
-
-    public void stopVideo(Method method, ITestResult result) throws IOException {
-
-        if (shouldCaptureVideo) {
-            if (shouldCaptureVideoOnlyFailure && result.getStatus() == ITestResult.SUCCESS) {
-                // Stop video recording
-                ((CanRecordScreen)getDriver()).stopRecordingScreen();
-                return;
-            }
-            System.out.println("Video recording stopped... " + method.getName() + "result : " + result.getStatus());
-            String base64String = ((CanRecordScreen)getDriver()).stopRecordingScreen();
-            byte[] data = Base64.getDecoder().decode(base64String);
-
-            Map<String, String> params = result.getTestContext().getCurrentXmlTest().getAllParameters();
-            String destinationPath = "videos" + File.separator + params.get("platformName") + "_" + params.get("deviceName")
-                    + File.separator + Utils.dateTime() + File.separator + result.getTestClass().getRealClass().getSimpleName();
-
-
-            if (!Files.isDirectory(Path.of(destinationPath))) {
-                Files.createDirectories(Path.of(destinationPath));
-            }
-            destinationPath = destinationPath + "/";
-            if (method.getName() == null || method.getName().isEmpty()) {
-                destinationPath = destinationPath + BaseTest.DefaultTestVideoFileName();
-            }else {
-                destinationPath= destinationPath + method.getName();
-            }
-            destinationPath = destinationPath + ".mp4";
-            Path path = Paths.get(destinationPath);
-            try {
-                Files.write(path, data);
-            } catch (Exception e) {
-                System.out.println("Exception : " + e);
-            }
-        }
-
-    }
-
     public static String DefaultTestVideoFileName() {
         return  "testVideo_" + Utils.dateTime();
     }
@@ -252,18 +206,12 @@ public abstract class BaseTest {
     }
 
     public void disMissLocationPermission(BasePage basePage) {
-        if(isAndroidPlatform()) {
-            TestUtility.waitForVisibility(basePage.locationPermission, getDriver());
-            if (TestUtility.isElementPresent(basePage.locationPermission)) {
-                basePage.locationPermission.click();
-            }
-        } else {
-            // todo handle by iOS
+        if (!isAndroidPlatform()) {
             TestUtility.waitForVisibility(basePage.iOSLocationPermissionAlert, getDriver());
-            TestUtility.waitForVisibility(basePage.locationPermission, getDriver());
-            if (TestUtility.isElementPresent(basePage.locationPermission)) {
-                basePage.locationPermission.click();
-            }
+        }
+        TestUtility.waitForVisibility(basePage.locationPermission, getDriver());
+        if (TestUtility.isElementPresent(basePage.locationPermission)) {
+            basePage.locationPermission.click();
         }
     }
 
@@ -281,7 +229,7 @@ public abstract class BaseTest {
         if(isRunTestRailSuite) {
             getTestRailApi().beforeTest(ctx, testMethod, currentPlatform);
         }
-        startVideo();
+        Utils.startVideo(shouldCaptureVideo, getDriver());
     }
 
     @AfterMethod (alwaysRun = true)
@@ -291,7 +239,7 @@ public abstract class BaseTest {
             getTestRailApi().afterTest(context, testResult, testMethod);
         }
         try {
-            stopVideo(testMethod, testResult);
+            Utils.stopVideo(testMethod, testResult, shouldCaptureVideo, shouldCaptureVideoOnlyFailure, getDriver());
         }catch (Exception e){
             System.out.println("Stop Video Error :"+e.getLocalizedMessage());
         }
@@ -302,7 +250,6 @@ public abstract class BaseTest {
         else return iOSTestRailApi;
     }
 
-    //    @BeforeTest
     public void createTestRunSuite(ITestContext ctx) throws APIException, IOException {
         if(isRunTestRailSuite) {
             if(isAndroidPlatform()) {
