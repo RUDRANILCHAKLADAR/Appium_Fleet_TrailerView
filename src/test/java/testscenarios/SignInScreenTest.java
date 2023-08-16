@@ -111,7 +111,6 @@ public class SignInScreenTest extends BaseTest {
         TestUtility.waitForVisibility(signInPage.assetListScreenTitle, getDriver());
     }
 
-    @AfterClass
     public void logOutUser() {
         if (isAndroidPlatform()) {
             if (signInPage.homeMoreButton.isDisplayed()) {

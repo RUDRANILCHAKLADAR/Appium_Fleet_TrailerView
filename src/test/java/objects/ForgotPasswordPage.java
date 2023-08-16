@@ -150,12 +150,12 @@ public class ForgotPasswordPage extends BasePage {
     public WebElement passwordsDontMatchErrorMessage;
 
 
-    @AndroidFindBy(id = "") // ToDo - add android locator
+//    @AndroidFindBy(id = "") // ToDo - add android locator
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_new_password\" AND type == \"XCUIElementTypeButton\"")
     public WebElement recoverCredentialCreateNewPwdHideShowText;
 
 
-    @AndroidFindBy(id = "") // ToDo - add android locator
+//    @AndroidFindBy(id = "") // ToDo - add android locator
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_confirm_password\" AND type == \"XCUIElementTypeButton\"")
     public WebElement recoverCredentialConfirmNewPwdHideShowText;
 
