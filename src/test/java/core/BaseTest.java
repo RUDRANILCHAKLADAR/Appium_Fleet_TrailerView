@@ -17,13 +17,8 @@ import utils.Utils;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.Base64;
-import java.util.Map;
 import java.util.Properties;
 
 public abstract class BaseTest {
@@ -51,12 +46,6 @@ public abstract class BaseTest {
 
         Properties properties = new Properties();
 
-//        String strFile = "logs" + File.separator + platformName + "_" + deviceName;
-//        File logFile = new File(strFile);
-//        if (!logFile.exists()) {
-//            logFile.mkdirs();
-//        }
-//        Log.info("log path: " + strFile);
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + Constants.CONFIG_PROPERTIES_PATH);
         properties.load(fis);
 
