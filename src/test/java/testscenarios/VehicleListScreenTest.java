@@ -83,7 +83,11 @@ public class VehicleListScreenTest extends BaseTest {
 
     public void logOutUser() {
         TestUtility.waitForVisibility(vehicleListPage.homeMoreButton, getDriver());
-        TestUtility.logOutUser(vehicleListPage, getDriver());
+        if (isAndroidPlatform()) {
+            TestUtility.logOutUser(vehicleListPage, getDriver());
+        } else {
+//                TestUtility.logOutUseriOS(vehicleListPage, getDriver());
+        }
     }
 
     public static void startApp2() throws MalformedURLException {
