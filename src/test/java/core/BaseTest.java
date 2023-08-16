@@ -141,7 +141,8 @@ public abstract class BaseTest {
     public void startVideo() {
         if (shouldCaptureVideo) {
             System.out.println("Video recording started...");
-            ((CanRecordScreen)driver).startRecordingScreen();
+//            ((CanRecordScreen)driver.startRecordingScreen();
+            ((CanRecordScreen)getDriver()).startRecordingScreen();
         }
     }
 
