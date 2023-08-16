@@ -137,14 +137,14 @@ public abstract class BaseTest {
         setStrings(Utils.parseStringXML(stringsis));
     }
 
-    @BeforeMethod
+
     public void startVideo() {
         if (shouldCaptureVideo) {
             System.out.println("Video recording started...");
             ((CanRecordScreen)driver).startRecordingScreen();
         }
     }
-    @AfterMethod
+
     public void stopVideo(Method method, ITestResult result) throws IOException {
 
         if (shouldCaptureVideo) {
@@ -278,6 +278,7 @@ public abstract class BaseTest {
         if(isRunTestRailSuite) {
             getTestRailApi().beforeTest(ctx, testMethod, currentPlatform);
         }
+        startVideo();
     }
 
     @AfterMethod (alwaysRun = true)
@@ -285,6 +286,11 @@ public abstract class BaseTest {
             context, Method testMethod) {
         if(isRunTestRailSuite) {
             getTestRailApi().afterTest(context, testResult, testMethod);
+        }
+        try {
+            stopVideo(testMethod, testResult);
+        }catch (Exception e){
+            System.out.println("Stop Video Error :"+e.getLocalizedMessage());
         }
     }
 
