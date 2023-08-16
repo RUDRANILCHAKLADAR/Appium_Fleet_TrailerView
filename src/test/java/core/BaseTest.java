@@ -1,7 +1,5 @@
 package core;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import core.testrail.APIException;
 import core.testrail.TestRailAPI;
 import io.appium.java_client.AppiumDriver;
@@ -11,6 +9,7 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.testng.*;
 import org.testng.annotations.*;
 import utils.Utils;
@@ -21,10 +20,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.Base64;
 import java.util.Properties;
-
 
 public abstract class BaseTest {
 
@@ -34,6 +36,9 @@ public abstract class BaseTest {
     protected static ThreadLocal <HashMap<String, String>> strings = new ThreadLocal<HashMap<String, String>>();
 
     private static boolean isRunTestRailSuite = false;
+
+    private static boolean shouldCaptureVideo = true;
+    private static boolean shouldCaptureVideoOnlyFailure = true;
 
     private static TestRailAPI androidTestRailApi;
     private static TestRailAPI iOSTestRailApi;
@@ -89,7 +94,13 @@ public abstract class BaseTest {
                 option.setAutomationName(properties.getProperty(Constants.IOS_AUTOMATION_DRIVER));
                 option.setPlatformVersion(properties.getProperty(Constants.IOS_VERSION));
                 option.setWdaLaunchTimeout(Duration.ofSeconds(30));
-                option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
+                if(System.getenv("BITRISE_APP_DIR_PATH")==null && System.getenv("BITRISE_SOURCE_DIR")==null){
+                    option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
+                }else if(System.getenv("BITRISE_APP_DIR_PATH")!=null) {
+                    option.setApp(System.getenv("BITRISE_APP_DIR_PATH"));
+                } else {
+                    option.setApp(System.getenv("BITRISE_SOURCE_DIR") + "/src/test/java/binaries/FleetLocate TrailerView Staging.app");
+                }
                 option.setAutoAcceptAlerts(false);
                 driver = new IOSDriver(url, option);
             }
@@ -124,6 +135,51 @@ public abstract class BaseTest {
 
         InputStream stringsis = getClass().getClassLoader().getResourceAsStream(xmlFileName);
         setStrings(Utils.parseStringXML(stringsis));
+    }
+
+    @BeforeMethod
+    public void startVideo() {
+        if (shouldCaptureVideo) {
+            System.out.println("Video recording started...");
+            ((CanRecordScreen)driver).startRecordingScreen();
+        }
+    }
+    @AfterMethod
+    public void stopVideo(Method method, ITestResult result) throws IOException {
+
+        if (shouldCaptureVideo) {
+            if (shouldCaptureVideoOnlyFailure && result.getStatus() == ITestResult.SUCCESS) {
+                // Stop video recording
+                ((CanRecordScreen)getDriver()).stopRecordingScreen();
+                return;
+            }
+            System.out.println("Video recording stopped... " + method.getName() + "result : " + result.getStatus());
+            String base64String = ((CanRecordScreen)getDriver()).stopRecordingScreen();
+            byte[] data = Base64.getDecoder().decode(base64String);
+            String destinationPath="target/surefire-reports/testVideos";
+
+            if (!Files.isDirectory(Path.of(destinationPath))) {
+                Files.createDirectories(Path.of(destinationPath));
+            }
+            destinationPath = destinationPath + "/";
+            if (method.getName() == null || method.getName().isEmpty()) {
+                destinationPath = destinationPath + BaseTest.DefaultTestVideoFileName();
+            }else {
+                destinationPath= destinationPath + method.getName();
+            }
+            destinationPath = destinationPath + ".mp4";
+            Path path = Paths.get(destinationPath);
+            try {
+                Files.write(path, data);
+            } catch (Exception e) {
+                System.out.println("Exception : " + e);
+            }
+        }
+
+    }
+
+    public static String DefaultTestVideoFileName() {
+        return  "testVideo_" + Utils.dateTime();
     }
 
     /*@BeforeTest
