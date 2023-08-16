@@ -14,10 +14,7 @@ import org.testng.*;
 import org.testng.annotations.*;
 import utils.Utils;
 
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
@@ -26,6 +23,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Base64;
+import java.util.Map;
 import java.util.Properties;
 
 public abstract class BaseTest {
@@ -37,8 +35,8 @@ public abstract class BaseTest {
 
     private static boolean isRunTestRailSuite = false;
 
-    private static boolean shouldCaptureVideo = true;
-    private static boolean shouldCaptureVideoOnlyFailure = true;
+    private static boolean shouldCaptureVideo = false;
+    private static boolean shouldCaptureVideoOnlyFailure = false;
 
     private static TestRailAPI androidTestRailApi;
     private static TestRailAPI iOSTestRailApi;
@@ -157,7 +155,11 @@ public abstract class BaseTest {
             System.out.println("Video recording stopped... " + method.getName() + "result : " + result.getStatus());
             String base64String = ((CanRecordScreen)getDriver()).stopRecordingScreen();
             byte[] data = Base64.getDecoder().decode(base64String);
-            String destinationPath="target/surefire-reports/testVideos";
+
+            Map<String, String> params = result.getTestContext().getCurrentXmlTest().getAllParameters();
+            String destinationPath = "videos" + File.separator + params.get("platformName") + "_" + params.get("deviceName")
+                    + File.separator + Utils.dateTime() + File.separator + result.getTestClass().getRealClass().getSimpleName();
+
 
             if (!Files.isDirectory(Path.of(destinationPath))) {
                 Files.createDirectories(Path.of(destinationPath));
