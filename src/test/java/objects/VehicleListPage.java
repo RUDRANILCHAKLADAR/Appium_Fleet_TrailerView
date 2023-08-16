@@ -25,7 +25,7 @@ public class VehicleListPage extends BasePage {
     @iOSXCUITFindBy(id = "ic_dots")
     public WebElement moreIcon;
 
-    @AndroidFindBy(accessibility = "assetListInfo")
+    @AndroidFindBy(xpath = "//*[contains(@text,'Showing')]")
     @iOSXCUITFindBy(iOSNsPredicate = "label BEGINSWITH 'Showing' AND type == 'XCUIElementTypeStaticText'")
     public WebElement listInfo;
 

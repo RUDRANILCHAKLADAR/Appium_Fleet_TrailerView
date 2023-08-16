@@ -23,9 +23,11 @@ public class AtiAvsService {
             Unirest.setTimeouts(60000L, 60000L);
             HttpClient client = new HttpClient();
             String finalUrl =  atiAvsBaseUrl + "/assets?limit=50&offset=0&sortBy=name&sortOrder=ASC";
+            System.out.println("atiavs service url: "+ finalUrl);
             Response<T> response = client.get(finalUrl, null, null, headers, clazz);
             return response.getParsedObject();
         }catch (Exception e){
+            System.out.println("error while fetch asset list from atiavs: "+e.getLocalizedMessage());
             return null;
         }
 

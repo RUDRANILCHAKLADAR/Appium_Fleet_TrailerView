@@ -52,31 +52,24 @@ public class VehicleListScreenTest extends BaseTest {
     @Test(priority = 1)
     public void testValidateAssetListUi(ITestContext context) {
         disMissLocationPermission(vehicleListPage);
-        TestUtility.waitForVisibility(vehicleListPage.homeMoreButton, getDriver());
-//        assertTrue(vehicleListPage.assetListTitle.isDisplayed());
-//        assertTrue(vehicleListPage.searchIcon.isDisplayed());
-//        assertTrue(vehicleListPage.moreIcon.isDisplayed());
-//        assertTrue(vehicleListPage.listInfo.isDisplayed());
-//        assertTrue(vehicleListPage.assetList.get(0).isDisplayed());
+        TestUtility.waitForVisibility(vehicleListPage.listInfo, getDriver());
+        assertTrue(vehicleListPage.assetListTitle.isDisplayed());
+        assertTrue(vehicleListPage.searchIcon.isDisplayed());
+        assertTrue(vehicleListPage.moreIcon.isDisplayed());
+        assertTrue(vehicleListPage.listInfo.isDisplayed());
 
+        JSONObject assetList = getAssetList(context);
+
+        assert assetList != null;
+        assertTrue(vehicleListPage.listInfo.getText().contains(assetList.get("total").toString()));
+    }
+
+    private JSONObject getAssetList(ITestContext context) {
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("x-nspire-usertoken", context.getAttribute(Constants.USER_TOKEN).toString()); // received from Identity service
         headers.put("Content-Type", "application/json");
 
-        JSONObject object = AtiAvsService.getAssetList(headers, JSONObject.class);
-
-        System.out.println("assetlist  api: ");
-        // verify asset list item
-//        vehicleListPage.assetList.get(0).findElement(By.xpath("android.view.View[1]"));
-
-        try {
-
-//        startApp2();
-        }catch (Exception e){
-            System.out.println("Rupak error on launching second app");
-        }
-
-        //android.view.View[@content-desc="assetList"]/android.view.View[2]
+        return AtiAvsService.getAssetList(headers, JSONObject.class);
     }
 
 
@@ -88,25 +81,6 @@ public class VehicleListScreenTest extends BaseTest {
         } else {
 //                TestUtility.logOutUseriOS(vehicleListPage, getDriver());
         }
-    }
-
-    public static void startApp2() throws MalformedURLException {
-        DesiredCapabilities cap2 = new DesiredCapabilities();
-        cap2.setCapability(MobileCapabilityType.NO_RESET, true);
-        cap2.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 600);
-        cap2.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5556");//emulator-5554
-        cap2.setCapability(CapabilityType.BROWSER_NAME, "Chrome");
-//                options.setCapability("chromedriverExecutable","D:\\Automation_Project\\MobileAutomationBestPractices\\drivers\\chromedriver.exe");
-        cap2.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
-//        cap2.setCapability("appPackage", "com.android.chrome");
-//        cap2.setCapability("appActivity", "your app1 package name");
-        cap2.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
-
-        URL url = new URL("http://127.0.0.1:4724/");
-        AppiumDriver smsDriver = new AndroidDriver(url, cap2);
-        smsDriver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
-
-//        ((AppiumDriver)getDriver()).switchTo().
     }
 
 }
