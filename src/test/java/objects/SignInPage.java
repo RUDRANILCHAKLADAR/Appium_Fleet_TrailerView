@@ -37,7 +37,7 @@ public class SignInPage extends BasePage {
     @iOSXCUITFindBy(xpath = "**/XCUIElementTypeButton[`label == \"Login\"`]")
     public WebElement logInButtonTxt;
 
-    @AndroidFindBy(xpath = ".//android.widget.Button[@text='Forgot Password?']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Forgot Password?']")
     @iOSXCUITFindBy(id = "button_signin_forgot_password")
     public WebElement forgotPwd;
 
