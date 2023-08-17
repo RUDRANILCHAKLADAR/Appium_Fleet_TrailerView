@@ -85,7 +85,7 @@ public class Utils {
             byte[] data = Base64.getDecoder().decode(base64String);
 
             Map<String, String> params = context.getCurrentXmlTest().getAllParameters();
-            String destinationPath = "videos" + File.separator + params.get("platformName") + "_" + params.get("deviceName")
+            String destinationPath = "target/surefire-reports/videos" + File.separator + params.get("platformName") + "_" + params.get("deviceName")
                     + File.separator + result.getTestClass().getRealClass().getSimpleName();
 
 
