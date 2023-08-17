@@ -3,6 +3,7 @@ package utils;
 import core.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.screenrecording.CanRecordScreen;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -71,7 +72,7 @@ public class Utils {
         }
     }
 
-    public static void stopVideo(Method method, ITestResult result, boolean shouldCaptureVideo, boolean shouldCaptureVideoOnlyFailure, AppiumDriver driver) throws IOException {
+    public static void stopVideo(Method method, ITestResult result, boolean shouldCaptureVideo, boolean shouldCaptureVideoOnlyFailure, AppiumDriver driver, ITestContext context) throws IOException {
 
         if (shouldCaptureVideo) {
             if (shouldCaptureVideoOnlyFailure && result.getStatus() == ITestResult.SUCCESS) {
@@ -83,9 +84,9 @@ public class Utils {
             String base64String = ((CanRecordScreen)driver).stopRecordingScreen();
             byte[] data = Base64.getDecoder().decode(base64String);
 
-            Map<String, String> params = result.getTestContext().getCurrentXmlTest().getAllParameters();
+            Map<String, String> params = context.getCurrentXmlTest().getAllParameters();
             String destinationPath = "videos" + File.separator + params.get("platformName") + "_" + params.get("deviceName")
-                    + File.separator + Utils.dateTime() + File.separator + result.getTestClass().getRealClass().getSimpleName();
+                    + File.separator + result.getTestClass().getRealClass().getSimpleName();
 
 
             if (!Files.isDirectory(Path.of(destinationPath))) {
@@ -99,6 +100,7 @@ public class Utils {
             }
             destinationPath = destinationPath + ".mp4";
             Path path = Paths.get(destinationPath);
+            System.out.println("Video recording saving at path : " + destinationPath );
             try {
                 Files.write(path, data);
             } catch (Exception e) {

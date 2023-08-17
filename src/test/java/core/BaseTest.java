@@ -228,7 +228,7 @@ public abstract class BaseTest {
             getTestRailApi().afterTest(context, testResult, testMethod);
         }
         try {
-            Utils.stopVideo(testMethod, testResult, shouldCaptureVideo, shouldCaptureVideoOnlyFailure, getDriver());
+            Utils.stopVideo(testMethod, testResult, shouldCaptureVideo, shouldCaptureVideoOnlyFailure, getDriver(), context);
         }catch (Exception e){
             System.out.println("Stop Video Error :"+e.getLocalizedMessage());
         }
