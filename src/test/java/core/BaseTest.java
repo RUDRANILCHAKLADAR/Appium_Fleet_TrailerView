@@ -30,7 +30,7 @@ public abstract class BaseTest {
 
     private static boolean isRunTestRailSuite = false;
 
-    private static boolean shouldCaptureVideo = false;
+    private static boolean shouldCaptureVideo = true;
     private static boolean shouldCaptureVideoOnlyFailure = false;
 
     private static TestRailAPI androidTestRailApi;
