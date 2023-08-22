@@ -12,7 +12,7 @@
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
             <class name="testscenarios.ForgotPasswordScreenTest"/>
-
+            <class name="testscenarios.VehicleListScreenTest"/>
         </classes>
     </test>
 
@@ -25,6 +25,7 @@
         <classes>
             <class name="testscenarios.SignInScreenTest"/>
             <class name="testscenarios.ForgotPasswordScreenTest"/>
+            <class name="testscenarios.VehicleListScreenTest"/>
         </classes>
     </test>
 </suite>

@@ -36,7 +36,7 @@ public abstract class BaseTest {
     private static TestRailAPI androidTestRailApi;
     private static TestRailAPI iOSTestRailApi;
 
-    public EnvProperties envProperties;
+    public static EnvProperties envProperties;
 
     @Parameters({"emulator", "platformName", "udid", "deviceName", "systemPort", "wdaLocalPort", "webkitDebugProxyPort"})
     @BeforeClass
