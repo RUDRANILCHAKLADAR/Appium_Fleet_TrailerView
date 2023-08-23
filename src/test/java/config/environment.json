@@ -1,0 +1,13 @@
+{
+  "stage": {
+    "platformBaseUrl": "https://platformapi-stage.spireon.com/v0/rest",
+    "identityServiceBaseUrl": "https://identity-stage.spireon.com/identity",
+    "atiAvsServiceBaseUrl":"https://ati-avs-api-stage.spireon.com/api/v1"
+  },
+  "prod": {
+    "platformBaseUrl": "https://platformapi.spireon.com/v0/rest",
+    "identityServiceBaseUrl": "https://identity.spireon.com/identity",
+    "atiAvsServiceBaseUrl":"https://ati-avs-api.spireon.com/api/v1"
+  }
+
+}

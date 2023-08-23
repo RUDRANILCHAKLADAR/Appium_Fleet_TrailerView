@@ -5,17 +5,20 @@ import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.connection.ConnectionStateBuilder;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import objects.SignInPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
+
 
 public class TestUtility {
 
@@ -122,6 +125,7 @@ public class TestUtility {
 
     public static void logInUser(BasePage basePage, String userName, String pwd) {
         basePage.userNameEditText.clear();
+        basePage.userNameEditText.clear();
         basePage.passWordEditText.clear();
         basePage.userNameEditText.sendKeys(userName);
         basePage.passWordEditText.sendKeys(pwd);
@@ -132,6 +136,16 @@ public class TestUtility {
         basePage.homeMoreButton.click();
         waitForVisibility(basePage.logOutButton, driver);
         basePage.logOutButton.click();
+        waitForVisibility(basePage.logOutConfirm, driver);
+        basePage.logOutConfirm.click();
+        waitForVisibility(basePage.forgotPwd, driver);
+    }
+
+    public static void logOutUseriOS(BasePage basePage, AppiumDriver driver) {
+        basePage.homeMoreButton.click();
+        if (basePage.logOutButton.isDisplayed()) {
+            basePage.logOutButton.click();
+        }
         waitForVisibility(basePage.logOutConfirm, driver);
         basePage.logOutConfirm.click();
         waitForVisibility(basePage.forgotPwd, driver);

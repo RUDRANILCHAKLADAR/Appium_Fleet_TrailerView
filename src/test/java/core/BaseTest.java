@@ -7,49 +7,50 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.testng.*;
 import org.testng.annotations.*;
+import utils.Utils;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Properties;
-
 
 public abstract class BaseTest {
 
     private Constants.Platform currentPlatform = null;
 
-    private AppiumDriver driver;
+    protected static ThreadLocal <AppiumDriver> driver = new ThreadLocal<AppiumDriver>();
+    protected static ThreadLocal <HashMap<String, String>> strings = new ThreadLocal<HashMap<String, String>>();
 
     private static boolean isRunTestRailSuite = false;
 
+    private static boolean shouldCaptureVideo = true;
+    private static boolean shouldCaptureVideoOnlyFailure = false;
+
     private static TestRailAPI androidTestRailApi;
     private static TestRailAPI iOSTestRailApi;
+
+    public static EnvProperties envProperties;
 
     @Parameters({"emulator", "platformName", "udid", "deviceName", "systemPort", "wdaLocalPort", "webkitDebugProxyPort"})
     @BeforeClass
     public void setUp(@Optional("androidOnly") String emulator, @Optional String platformName, @Optional String udid, @Optional String deviceName,
                            @Optional("androidOnly") String systemPort,
-                           @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort) throws Exception {
+                           @Optional("iOSOnly") String wdaLocalPort, @Optional("iOSOnly") String webkitDebugProxyPort, ITestContext context) throws Exception {
 
         Properties properties = new Properties();
 
-//        String strFile = "logs" + File.separator + platformName + "_" + deviceName;
-//        File logFile = new File(strFile);
-//        if (!logFile.exists()) {
-//            logFile.mkdirs();
-//        }
-//        Log.info("log path: " + strFile);
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + Constants.CONFIG_PROPERTIES_PATH);
         properties.load(fis);
 
         URL url = new URL(properties.getProperty(Constants.APPIUM_URL));
-
-//        platformName = "iOS";
-
+        AppiumDriver driver;
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
                 currentPlatform = Constants.Platform.ANDROID;
@@ -80,19 +81,33 @@ public abstract class BaseTest {
                 option.setAutomationName(properties.getProperty(Constants.IOS_AUTOMATION_DRIVER));
                 option.setPlatformVersion(properties.getProperty(Constants.IOS_VERSION));
                 option.setWdaLaunchTimeout(Duration.ofSeconds(30));
-                //option.setApp(System.getProperty("user.dir") + "//App//Fleet Staging.app");
-                option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
-                option.autoAcceptAlerts();
+                if(System.getenv("BITRISE_APP_DIR_PATH")==null && System.getenv("BITRISE_SOURCE_DIR")==null){
+                    option.setApp(System.getProperty("user.dir") + properties.getProperty(Constants.IOS_APP_PATH));
+                }else if(System.getenv("BITRISE_APP_DIR_PATH")!=null) {
+                    option.setApp(System.getenv("BITRISE_APP_DIR_PATH"));
+                } else {
+                    option.setApp(System.getenv("BITRISE_SOURCE_DIR") + "/src/test/java/binaries/FleetLocate TrailerView Staging.app");
+                }
+                option.setAutoAcceptAlerts(false);
                 driver = new IOSDriver(url, option);
             }
             default -> throw new Exception("Invalid platform! - " + platformName);
         }
-        init();
+        setDriver(driver);
+        init(context);
     }
+
+    public AppiumDriver getDriver() {
+        return driver.get();
+    }
+
+    public void setDriver(AppiumDriver driver2) {
+        driver.set(driver2);
+    }
+
     @Parameters({"platformName"})
     @BeforeTest
     public void beforeTest(@Optional String platformName, ITestContext ctx) throws Exception {
-//        platformName = "iOS";
         switch (Constants.Platform.getPlatformFromName(platformName)) {
             case ANDROID -> {
                 currentPlatform = Constants.Platform.ANDROID;
@@ -102,6 +117,15 @@ public abstract class BaseTest {
             }
         }
         createTestRunSuite(ctx);
+
+        String xmlFileName = "strings/strings.xml";
+
+        InputStream stringsis = getClass().getClassLoader().getResourceAsStream(xmlFileName);
+        setStrings(Utils.parseStringXML(stringsis));
+    }
+
+    public static String DefaultTestVideoFileName() {
+        return  "testVideo_" + Utils.dateTime();
     }
 
     /*@BeforeTest
@@ -154,15 +178,12 @@ public abstract class BaseTest {
         System.out.println("rupak before param " + currentPlatform);
     }*/
 
-    protected  void init(){};
-    protected  void deInit(){};
+    protected abstract void init(ITestContext context);
+
+    protected abstract void deInit();
 
     public Constants.Platform getCurrentPlatform() {
         return currentPlatform;
-    }
-
-    public AppiumDriver getDriver() {
-        return driver;
     }
 
     public boolean isAndroidPlatform() {
@@ -174,13 +195,12 @@ public abstract class BaseTest {
     }
 
     public void disMissLocationPermission(BasePage basePage) {
-        if(isAndroidPlatform()) {
-            TestUtility.waitForVisibility(basePage.locationPermission, driver);
-            if (TestUtility.isElementPresent(basePage.locationPermission)) {
-                basePage.locationPermission.click();
-            }
-        } else {
-            // todo handle by iOS
+        if (!isAndroidPlatform()) {
+            TestUtility.waitForVisibility(basePage.iOSLocationPermissionAlert, getDriver());
+        }
+        TestUtility.waitForVisibility(basePage.locationPermission, getDriver());
+        if (TestUtility.isElementPresent(basePage.locationPermission)) {
+            basePage.locationPermission.click();
         }
     }
 
@@ -188,8 +208,8 @@ public abstract class BaseTest {
     @AfterClass(alwaysRun = true)
     public void tearDown() {
         deInit();
-        if(driver != null) {
-            driver.quit();
+        if(getDriver() != null) {
+            getDriver().quit();
         }
     }
 
@@ -198,6 +218,7 @@ public abstract class BaseTest {
         if(isRunTestRailSuite) {
             getTestRailApi().beforeTest(ctx, testMethod, currentPlatform);
         }
+        Utils.startVideo(shouldCaptureVideo, getDriver());
     }
 
     @AfterMethod (alwaysRun = true)
@@ -206,6 +227,11 @@ public abstract class BaseTest {
         if(isRunTestRailSuite) {
             getTestRailApi().afterTest(context, testResult, testMethod);
         }
+        try {
+            Utils.stopVideo(testMethod, testResult, shouldCaptureVideo, shouldCaptureVideoOnlyFailure, getDriver(), context);
+        }catch (Exception e){
+            System.out.println("Stop Video Error :"+e.getLocalizedMessage());
+        }
     }
 
     private TestRailAPI getTestRailApi() {
@@ -213,7 +239,6 @@ public abstract class BaseTest {
         else return iOSTestRailApi;
     }
 
-    //    @BeforeTest
     public void createTestRunSuite(ITestContext ctx) throws APIException, IOException {
         if(isRunTestRailSuite) {
             if(isAndroidPlatform()) {
@@ -224,6 +249,30 @@ public abstract class BaseTest {
                 iOSTestRailApi.createTestRunSuite(ctx, currentPlatform);
             }
         }
+    }
+
+    @Parameters("environment")
+    @BeforeSuite
+    public void beforeSuite(ITestContext ctx, String environment) {
+        try {
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(new FileReader(System.getProperty("user.dir") + Constants.ENVIRONMENT_CONFIG_PATH));
+
+            JSONObject jsonObject =  (JSONObject) obj;
+            ctx.setAttribute(Constants.ENVIRONMENT_CONFIG, jsonObject.get(environment));
+            ctx.setAttribute(Constants.ENVIRONMENT_NAME, environment);
+            envProperties = new EnvProperties(ctx);
+        } catch (Exception exception) {
+            System.out.println("error reading config file --: "+exception);
+        }
+    }
+
+    public HashMap<String, String> getStrings() {
+        return strings.get();
+    }
+
+    public void setStrings(HashMap<String, String> strings2) {
+        strings.set(strings2);
     }
 
 }

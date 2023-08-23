@@ -4,6 +4,7 @@ import core.Constants;
 import org.json.simple.JSONObject;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import utils.Utils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -110,7 +111,7 @@ public class TestRailAPI {
     public void createTestRunSuite(ITestContext ctx, Constants.Platform currentPlatform) throws IOException, APIException{
         Map<String, Object> data = new HashMap<>();
         data.put("include_all", true);
-        data.put("name", "Appium Test Run " + currentPlatform);
+        data.put("name", "Appium Test Run " + currentPlatform + " " + Utils.dateTime());
         JSONObject jsonObject = (JSONObject) getTestRailAPIClient().sendPost("add_run/" + TEST_RAIL_PROJECT_ID, data);
         Long suiteId = (Long) jsonObject.get("id");
         ctx.setAttribute("suiteId", suiteId);
