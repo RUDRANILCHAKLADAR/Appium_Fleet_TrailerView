@@ -95,7 +95,7 @@ public class ForgotPasswordPage extends BasePage {
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_accesscode\" AND type == \"XCUIElementTypeButton\"")
     public WebElement recoverCredentialResendBtn;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Password Requirements (Minimum 8 Characters)']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Password Requirements (Minimum 8 Characters)']")
     @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialPwdRequirements;
 
@@ -103,11 +103,11 @@ public class ForgotPasswordPage extends BasePage {
     @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialAtLeastOneOfEach;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='•\t\tUpper case•\t\tLower case']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='• Upper case letter• Lower case letter']")
     @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialUpperLowerCase;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='•\t\tNumber•\t\tSpecial character(#?!@\\$%^&*-)']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='• Number• Special character(#?!@\\$%^&*-)']")
     @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialNumberSpecialCharacters;
 
@@ -127,7 +127,7 @@ public class ForgotPasswordPage extends BasePage {
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_confirm_password\" AND type == \"XCUIElementTypeSecureTextField\"")
     public WebElement recoverCredentialConfirmNewPwdEditText;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='RESET PASSWORD']")
+    @AndroidFindBy(xpath = ".//android.view.View[@content-desc=\"resetPwdButton\"]")
     @iOSXCUITFindBy(id = "button_recover_credential_submit")
     public WebElement recoverCredentialResetPwd;
 
