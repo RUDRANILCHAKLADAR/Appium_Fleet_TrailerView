@@ -28,6 +28,7 @@ public class ForgotPasswordScreenTest extends BaseTest {
     }
 
     private void launchForgotPasswordScreen() {
+        TestUtility.waitForVisibility(signInPage.forgotPwd, getDriver());
         assertTrue(signInPage.forgotPwd.isDisplayed());
         signInPage.forgotPwd.click();
         TestUtility.waitForVisibility(forgotPasswordPage.forgotPasswordTitle, getDriver());

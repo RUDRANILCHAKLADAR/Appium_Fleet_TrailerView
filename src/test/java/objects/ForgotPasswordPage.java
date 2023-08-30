@@ -95,7 +95,7 @@ public class ForgotPasswordPage extends BasePage {
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_accesscode\" AND type == \"XCUIElementTypeButton\"")
     public WebElement recoverCredentialResendBtn;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Password Requirements (Minimum 8 Characters)']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Password Requirements (Minimum 8 Characters)']")
     @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialPwdRequirements;
 
@@ -103,11 +103,11 @@ public class ForgotPasswordPage extends BasePage {
     @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialAtLeastOneOfEach;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='• Upper case letter• Lower case letter']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='•\t\tUpper case•\t\tLower case']")
     @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialUpperLowerCase;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='• Number• Special character(#?!@\\$%^&*-)']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='•\t\tNumber•\t\tSpecial character(#?!@\\$%^&*-)']")
     @iOSXCUITFindBy(id = "text_recover_credential_password_requirements")
     public WebElement recoverCredentialNumberSpecialCharacters;
 

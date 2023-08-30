@@ -33,6 +33,7 @@ public class VehicleListScreenTest extends BaseTest {
         vehicleListPage = new VehicleListPage(getDriver());
         AtiAvsService.setAtiAvsBaseUrl(envProperties.getAtiAvsBaseUrl());
         fetchNSetUserToken(context, "atistagetest", "Password1");
+        TestUtility.waitForVisibility(vehicleListPage.userNameEditText, getDriver());
         TestUtility.logInUser(vehicleListPage, "atistagetest", "Password1");
     }
 

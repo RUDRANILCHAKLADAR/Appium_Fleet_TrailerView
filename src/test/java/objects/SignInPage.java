@@ -44,7 +44,7 @@ public class SignInPage extends BasePage {
     @AndroidFindBy(id = "com.android.permissioncontroller:id/permission_allow_foreground_only_button")
     public WebElement permission_access;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Error']")
+    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='Invalid Credentials']")
     @iOSXCUITFindBy(iOSNsPredicate = "label == \"Error\" AND name == \"Error\" AND type == \"XCUIElementTypeAlert\"")
     public WebElement invalidCrednetialErrorTitle;
 

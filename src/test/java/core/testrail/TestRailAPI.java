@@ -102,9 +102,11 @@ public class TestRailAPI {
 
     public void afterTest(ITestContext context, ITestResult testResult, Method testMethod) {
         String[] testId = (String[]) context.getAttribute("testId");
-        Long suiteId = (Long) context.getAttribute("suiteId");
-        for (String id: testId) {
-            postTestRailResult(id, suiteId, testResult);
+        if (testId != null && testId.length > 0) {
+            Long suiteId = (Long) context.getAttribute("suiteId");
+            for (String id: testId) {
+                postTestRailResult(id, suiteId, testResult);
+            }
         }
     }
 
