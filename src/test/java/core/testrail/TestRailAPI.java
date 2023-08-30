@@ -88,6 +88,7 @@ public class TestRailAPI {
 
     public void beforeTest(ITestContext ctx, Method testMethod, Constants.Platform currentPlatform) {
         String[] annotations = null;
+        ctx.removeAttribute("testId");
         if(currentPlatform.getPlatformName() == Constants.Platform.ANDROID.getPlatformName() && testMethod.isAnnotationPresent(TestRailIdAndroid.class)) {
             TestRailIdAndroid ids = testMethod.getAnnotation(TestRailIdAndroid.class);
            annotations = ids.androidTags();
