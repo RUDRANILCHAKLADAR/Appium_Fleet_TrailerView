@@ -28,7 +28,7 @@ public abstract class BaseTest {
     protected static ThreadLocal <AppiumDriver> driver = new ThreadLocal<AppiumDriver>();
     protected static ThreadLocal <HashMap<String, String>> strings = new ThreadLocal<HashMap<String, String>>();
 
-    private static boolean isRunTestRailSuite = false;
+    private static boolean isRunTestRailSuite = true;
 
     private static boolean shouldCaptureVideo = true;
     private static boolean shouldCaptureVideoOnlyFailure = false;

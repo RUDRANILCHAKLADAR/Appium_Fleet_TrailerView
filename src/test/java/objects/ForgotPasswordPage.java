@@ -127,7 +127,7 @@ public class ForgotPasswordPage extends BasePage {
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"textfield_recover_credential_confirm_password\" AND type == \"XCUIElementTypeSecureTextField\"")
     public WebElement recoverCredentialConfirmNewPwdEditText;
 
-    @AndroidFindBy(xpath = ".//android.widget.TextView[@text='RESET PASSWORD']")
+    @AndroidFindBy(xpath = ".//android.view.View[@content-desc=\"resetPwdButton\"]")
     @iOSXCUITFindBy(id = "button_recover_credential_submit")
     public WebElement recoverCredentialResetPwd;
 

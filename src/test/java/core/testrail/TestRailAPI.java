@@ -88,6 +88,7 @@ public class TestRailAPI {
 
     public void beforeTest(ITestContext ctx, Method testMethod, Constants.Platform currentPlatform) {
         String[] annotations = null;
+        ctx.removeAttribute("testId");
         if(currentPlatform.getPlatformName() == Constants.Platform.ANDROID.getPlatformName() && testMethod.isAnnotationPresent(TestRailIdAndroid.class)) {
             TestRailIdAndroid ids = testMethod.getAnnotation(TestRailIdAndroid.class);
            annotations = ids.androidTags();
@@ -102,9 +103,11 @@ public class TestRailAPI {
 
     public void afterTest(ITestContext context, ITestResult testResult, Method testMethod) {
         String[] testId = (String[]) context.getAttribute("testId");
-        Long suiteId = (Long) context.getAttribute("suiteId");
-        for (String id: testId) {
-            postTestRailResult(id, suiteId, testResult);
+        if (testId != null && testId.length > 0) {
+            Long suiteId = (Long) context.getAttribute("suiteId");
+            for (String id: testId) {
+                postTestRailResult(id, suiteId, testResult);
+            }
         }
     }
 

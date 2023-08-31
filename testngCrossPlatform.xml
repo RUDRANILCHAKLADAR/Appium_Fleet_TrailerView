@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" verbose="10" preserve-order="true" parallel="tests">
     <parameter name="environment" value="stage"/>
-    <test name="Android" parallel="false" thread-count="1">
+    <test name="Android" parallel="none" thread-count="1">
         <parameter name="emulator" value="true"/>
         <parameter name="platformName" value="android"/>
         <parameter name="udid" value="replace_with_device_udid"/>
@@ -16,7 +16,7 @@
         </classes>
     </test>
 
-    <test name="iOS" parallel="false" thread-count="1">
+    <test name="iOS" parallel="none" thread-count="1">
         <parameter name="platformName" value="iOS"/>
         <parameter name="udid" value="63E2D54C-CA63-4ECA-89C2-61F2F41EE2F7"/>
         <parameter name="deviceName" value="iPhone 14"/>
